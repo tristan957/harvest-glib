@@ -87,6 +87,7 @@ harvest_glib = library(
 harvest_glib_dep = declare_dependency(
     link_with: harvest_glib,
     version: meson.project_version(),
+    include_directories: include_directories(join_paths(include_root))
 )
 
 pkg.generate(
