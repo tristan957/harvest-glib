@@ -6,7 +6,7 @@
 
 #include <glib-object.h>
 
-#include "http/harvest-http.h"
+#include "harvest-glib/http/harvest-http.h"
 
 G_BEGIN_DECLS
 

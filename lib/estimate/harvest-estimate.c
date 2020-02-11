@@ -7,12 +7,12 @@
 #include <glib/gi18n-lib.h>
 #include <json-glib/json-glib.h>
 
-#include "client/harvest-client.h"
-#include "common/harvest-common.h"
-#include "common/harvest-creator.h"
-#include "estimate/harvest-estimate-enum-types.h"
-#include "estimate/harvest-estimate-line-item.h"
-#include "estimate/harvest-estimate.h"
+#include "harvest-glib/client/harvest-client.h"
+#include "harvest-glib/common/harvest-common.h"
+#include "harvest-glib/common/harvest-creator.h"
+#include "harvest-glib/estimate/harvest-estimate-enum-types.h"
+#include "harvest-glib/estimate/harvest-estimate-line-item.h"
+#include "harvest-glib/estimate/harvest-estimate.h"
 
 struct _HarvestEstimate
 {

@@ -6,9 +6,9 @@
 
 #include <glib-object.h>
 
-#include "http/harvest-http.h"
-#include "http/response/harvest-response-metadata.h"
-#include "http/response/harvest-response.h"
+#include "harvest-glib/http/harvest-http.h"
+#include "harvest-glib/http/response/harvest-response-metadata.h"
+#include "harvest-glib/http/response/harvest-response.h"
 
 G_BEGIN_DECLS
 

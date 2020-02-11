@@ -7,7 +7,7 @@
 #include <glib/gi18n-lib.h>
 #include <json-glib/json-glib.h>
 
-#include "task/harvest-task.h"
+#include "harvest-glib/task/harvest-task.h"
 
 struct _HarvestTask
 {

@@ -7,9 +7,9 @@
 #include <glib/gi18n-lib.h>
 #include <json-glib/json-glib.h>
 
-#include "client/harvest-client.h"
-#include "common/harvest-common.h"
-#include "project/harvest-project.h"
+#include "harvest-glib/client/harvest-client.h"
+#include "harvest-glib/common/harvest-common.h"
+#include "harvest-glib/project/harvest-project.h"
 
 struct _HarvestProject
 {

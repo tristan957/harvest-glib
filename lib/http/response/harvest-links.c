@@ -3,7 +3,7 @@
 #include <glib-object.h>
 #include <glib/gi18n-lib.h>
 
-#include "http/response/harvest-links.h"
+#include "harvest-glib/http/response/harvest-links.h"
 
 struct _HarvestLinks
 {

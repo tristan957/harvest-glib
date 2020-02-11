@@ -2,11 +2,11 @@
 
 #include <glib-object.h>
 
-#include "company/harvest-company.h"
-#include "company/requests/harvest-get-company-request.h"
-#include "http/harvest-http.h"
-#include "http/request/harvest-request.h"
-#include "http/response/harvest-response-metadata.h"
+#include "harvest-glib/company/harvest-company.h"
+#include "harvest-glib/company/requests/harvest-get-company-request.h"
+#include "harvest-glib/http/harvest-http.h"
+#include "harvest-glib/http/request/harvest-request.h"
+#include "harvest-glib/http/response/harvest-response-metadata.h"
 
 struct _HarvestGetCompanyRequest
 {

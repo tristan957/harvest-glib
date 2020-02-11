@@ -18,13 +18,15 @@ c_args = [
 	'-DG_LOG_DOMAIN="harvest-glib-testing"',
 ]
 
+include_root = join_paths('..', 'include')
+
 foreach test_name, value : harvest_tests
 	exe = executable(
 		test_name,
 		test_name + '.c',
 		dependencies: dependencies,
 		c_args: c_args,
-		include_directories: include_directories(join_paths('..', 'include')),
+		include_directories: include_directories(join_paths(include_root)),
 	)
 
 	test(test_name, exe, env: test_env)

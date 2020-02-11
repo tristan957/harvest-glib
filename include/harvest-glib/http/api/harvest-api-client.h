@@ -7,8 +7,8 @@
 #include <glib-object.h>
 #include <libsoup/soup.h>
 
-#include "http/request/harvest-request.h"
-#include "http/response/harvest-response.h"
+#include "harvest-glib/http/request/harvest-request.h"
+#include "harvest-glib/http/response/harvest-response.h"
 
 G_BEGIN_DECLS
 

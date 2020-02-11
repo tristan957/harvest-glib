@@ -6,7 +6,7 @@
 #include <glib/gi18n-lib.h>
 #include <json-glib/json-glib.h>
 
-#include "estimate/harvest-estimate-item-category.h"
+#include "harvest-glib/estimate/harvest-estimate-item-category.h"
 
 struct _HarvestEstimateItemCategory
 {

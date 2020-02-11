@@ -7,12 +7,12 @@
 #include <json-glib/json-glib.h>
 #include <libsoup/soup.h>
 
-#include "common/harvest-common.h"
-#include "http/api/harvest-api-client.h"
-#include "http/harvest-http.h"
-#include "http/request/harvest-request.h"
-#include "http/response/harvest-response-metadata.h"
-#include "http/response/harvest-response.h"
+#include "harvest-glib/common/harvest-common.h"
+#include "harvest-glib/http/api/harvest-api-client.h"
+#include "harvest-glib/http/harvest-http.h"
+#include "harvest-glib/http/request/harvest-request.h"
+#include "harvest-glib/http/response/harvest-response-metadata.h"
+#include "harvest-glib/http/response/harvest-response.h"
 
 #define HARVEST_API_URL "https://api.harvestapp.com/v2"
 

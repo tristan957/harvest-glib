@@ -6,9 +6,9 @@
 #include <glib/gi18n.h>
 #include <json-glib/json-glib.h>
 
-#include "company/harvest-company-enum-types.h"
-#include "company/harvest-company.h"
-#include "company/requests/harvest-get-company-request.h"
+#include "harvest-glib/company/harvest-company-enum-types.h"
+#include "harvest-glib/company/harvest-company.h"
+#include "harvest-glib/company/requests/harvest-get-company-request.h"
 
 struct _HarvestCompany
 {

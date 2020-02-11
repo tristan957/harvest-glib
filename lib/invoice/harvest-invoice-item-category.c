@@ -6,7 +6,7 @@
 #include <glib/gi18n-lib.h>
 #include <json-glib/json-glib.h>
 
-#include "invoice/harvest-invoice-item-category.h"
+#include "harvest-glib/invoice/harvest-invoice-item-category.h"
 
 struct _HarvestInvoiceItemCategory
 {

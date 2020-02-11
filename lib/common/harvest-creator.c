@@ -5,7 +5,7 @@
 #include <glib-object.h>
 #include <glib/gi18n-lib.h>
 
-#include "common/harvest-creator.h"
+#include "harvest-glib/common/harvest-creator.h"
 
 struct _HarvestCreator
 {

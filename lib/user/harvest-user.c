@@ -7,10 +7,10 @@
 #include <glib/gi18n-lib.h>
 #include <json-glib/json-glib.h>
 
-#include "http/api/harvest-api-client.h"
-#include "http/response/harvest-response.h"
-#include "user/harvest-user.h"
-#include "user/requests/harvest-users-me-request.h"
+#include "harvest-glib/http/api/harvest-api-client.h"
+#include "harvest-glib/http/response/harvest-response.h"
+#include "harvest-glib/user/harvest-user.h"
+#include "harvest-glib/user/requests/harvest-users-me-request.h"
 
 struct _HarvestUser
 {

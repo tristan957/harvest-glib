@@ -3,9 +3,9 @@
 #include <glib-object.h>
 #include <glib/gi18n-lib.h>
 
-#include "http/harvest-http-enum-types.h"
-#include "http/harvest-http.h"
-#include "http/response/harvest-response.h"
+#include "harvest-glib/http/harvest-http-enum-types.h"
+#include "harvest-glib/http/harvest-http.h"
+#include "harvest-glib/http/response/harvest-response.h"
 
 G_DEFINE_TYPE(HarvestResponse, harvest_response, G_TYPE_OBJECT)
 

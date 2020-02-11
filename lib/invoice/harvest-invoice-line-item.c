@@ -7,8 +7,8 @@
 #include <glib/gi18n-lib.h>
 #include <json-glib/json-glib.h>
 
-#include "invoice/harvest-invoice-line-item.h"
-#include "project/harvest-project.h"
+#include "harvest-glib/invoice/harvest-invoice-line-item.h"
+#include "harvest-glib/project/harvest-project.h"
 
 struct _HarvestInvoiceLineItem
 {

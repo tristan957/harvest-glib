@@ -4,11 +4,11 @@
 #include <glib/gi18n-lib.h>
 #include <json-glib/json-glib.h>
 
-#include "http/harvest-http-enum-types.h"
-#include "http/harvest-http.h"
-#include "http/request/harvest-request.h"
-#include "http/response/harvest-response-metadata.h"
-#include "http/response/harvest-response.h"
+#include "harvest-glib/http/harvest-http-enum-types.h"
+#include "harvest-glib/http/harvest-http.h"
+#include "harvest-glib/http/request/harvest-request.h"
+#include "harvest-glib/http/response/harvest-response-metadata.h"
+#include "harvest-glib/http/response/harvest-response.h"
 
 typedef struct _HarvestRequestPrivate
 {

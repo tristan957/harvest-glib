@@ -3,8 +3,8 @@
 #include <glib-object.h>
 #include <glib/gi18n-lib.h>
 
-#include "http/response/harvest-links.h"
-#include "http/response/harvest-paged.h"
+#include "harvest-glib/http/response/harvest-links.h"
+#include "harvest-glib/http/response/harvest-paged.h"
 
 typedef struct _HarvestPagedPrivate
 {

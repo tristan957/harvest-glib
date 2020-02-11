@@ -7,15 +7,15 @@
 #include <glib/gi18n-lib.h>
 #include <json-glib/json-glib.h>
 
-#include "client/harvest-client.h"
-#include "common/harvest-common.h"
-#include "invoice/harvest-invoice.h"
-#include "project/harvest-project-task-assignment.h"
-#include "project/harvest-project-user-assignment.h"
-#include "project/harvest-project.h"
-#include "task/harvest-task.h"
-#include "time-entry/harvest-time-entry.h"
-#include "user/harvest-user.h"
+#include "harvest-glib/client/harvest-client.h"
+#include "harvest-glib/common/harvest-common.h"
+#include "harvest-glib/invoice/harvest-invoice.h"
+#include "harvest-glib/project/harvest-project-task-assignment.h"
+#include "harvest-glib/project/harvest-project-user-assignment.h"
+#include "harvest-glib/project/harvest-project.h"
+#include "harvest-glib/task/harvest-task.h"
+#include "harvest-glib/time-entry/harvest-time-entry.h"
+#include "harvest-glib/user/harvest-user.h"
 
 struct _HarvestTimeEntry
 {

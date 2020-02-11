@@ -3,7 +3,7 @@
 #include <glib-object.h>
 #include <glib/gi18n-lib.h>
 
-#include "http/request/harvest-pageable.h"
+#include "harvest-glib/http/request/harvest-pageable.h"
 
 G_DEFINE_INTERFACE(HarvestPageable, harvest_pageable, G_TYPE_OBJECT)
 

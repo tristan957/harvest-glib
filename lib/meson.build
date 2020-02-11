@@ -61,6 +61,8 @@ harvest_glib_dependencies = [
     libsoup_dep,
 ]
 
+include_root = join_paths('..', 'include')
+
 harvest_glib = library(
     'harvest-glib',
     harvest_glib_sources,
@@ -73,11 +75,11 @@ harvest_glib = library(
     dependencies: harvest_glib_dependencies,
     # Dealing with gnome.mkenums_simple()...
     include_directories: include_directories(
-        '../include',
-        '../include/company',
-        '../include/estimate',
-        '../include/http',
-        '../include/invoice',
+        include_root,
+        join_paths(include_root, harvest_glib_header_subdir, 'company'),
+        join_paths(include_root, harvest_glib_header_subdir, 'estimate'),
+        join_paths(include_root, harvest_glib_header_subdir, 'http'),
+        join_paths(include_root, harvest_glib_header_subdir, 'invoice'),
     ),
     install: true,
 )

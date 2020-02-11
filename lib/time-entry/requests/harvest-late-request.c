@@ -5,9 +5,9 @@
 #include <glib-object.h>
 #include <glib/gi18n-lib.h>
 
-#include "http/harvest-http.h"
-#include "http/response/harvest-response-metadata.h"
-#include "time-entry/requests/harvest-late-request.h"
+#include "harvest-glib/http/harvest-http.h"
+#include "harvest-glib/http/response/harvest-response-metadata.h"
+#include "harvest-glib/time-entry/requests/harvest-late-request.h"
 
 struct _HarvestLATERequest
 {

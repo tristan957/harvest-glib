@@ -6,7 +6,7 @@
 #include <glib-object.h>
 #include <glib/gi18n-lib.h>
 
-#include "estimate/harvest-estimate-line-item.h"
+#include "harvest-glib/estimate/harvest-estimate-line-item.h"
 
 struct _HarvestEstimateLineItem
 {

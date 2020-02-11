@@ -2,7 +2,7 @@
 
 #include <glib-object.h>
 
-#include "common/harvest-common.h"
+#include "harvest-glib/common/harvest-common.h"
 
 // Never gets unrefed
 static const GRegex *regex;
