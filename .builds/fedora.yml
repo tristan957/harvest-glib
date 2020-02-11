@@ -1,0 +1,23 @@
+image: fedora/31
+packages:
+  - meson
+  - json-glib-devel
+  - libsoup-devel
+secrets:
+  - 92357bf7-1b44-4630-999e-fca4a120c50b
+  - dcbdc813-27be-4b3a-aa2b-22fae8b0c19e
+sources:
+  - https://git.sr.ht/~tristan957/harvest-glib
+tasks:
+  - setup: |
+      cd harvest-glib
+      CC=gcc meson -Dwerror=true -Dbuildtype=release -Dwarning_level=2 build
+  - build: |
+      cd harvest-glib
+      ninja -C build
+  - test: |
+      cd harvest-glib
+      set +x
+      . ~/.harvest-glib.env
+      set -x
+      ninja test -C build

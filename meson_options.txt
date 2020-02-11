@@ -1,0 +1,2 @@
+option('with-tests', type: 'boolean', value: true,
+	description: 'Build the test suite')

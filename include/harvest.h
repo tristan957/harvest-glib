@@ -1,0 +1,38 @@
+#pragma once
+
+#define __HARVEST_HEADER_INTERNAL__
+
+#include "client/harvest-client.h"
+#include "common/harvest-common.h"
+#include "common/harvest-creator.h"
+#include "company/harvest-company-enum-types.h"
+#include "company/harvest-company.h"
+#include "company/requests/harvest-get-company-request.h"
+#include "estimate/harvest-estimate-enum-types.h"
+#include "estimate/harvest-estimate-item-category.h"
+#include "estimate/harvest-estimate-line-item.h"
+#include "estimate/harvest-estimate.h"
+#include "http/api/harvest-api-client.h"
+#include "http/harvest-http-enum-types.h"
+#include "http/harvest-http.h"
+#include "http/request/harvest-pageable.h"
+#include "http/request/harvest-request.h"
+#include "http/response/harvest-links.h"
+#include "http/response/harvest-paged.h"
+#include "http/response/harvest-response-metadata.h"
+#include "http/response/harvest-response.h"
+#include "invoice/harvest-invoice-enum-types.h"
+#include "invoice/harvest-invoice-item-category.h"
+#include "invoice/harvest-invoice-line-item.h"
+#include "invoice/harvest-invoice.h"
+#include "project/harvest-project-task-assignment.h"
+#include "project/harvest-project-user-assignment.h"
+#include "project/harvest-project.h"
+#include "task/harvest-task.h"
+#include "time-entry/harvest-time-entry.h"
+#include "time-entry/requests/harvest-late-request.h"
+#include "user/harvest-user-project-assignment.h"
+#include "user/harvest-user.h"
+#include "user/requests/harvest-users-me-request.h"
+
+#undef __HARVEST_HEADER_INTERNAL__

@@ -1,0 +1,6 @@
+[wrap-file]
+directory = libsoup-2.68.2
+
+source_url = https://gitlab.gnome.org/GNOME/libsoup/-/archive/2.68.2/libsoup-2.68.2.tar.gz
+source_filename = libsoup-2.68.2.tar.gz
+source_hash = a2a44f8b8eb5e145c5dff473f6d8c5b8f1addcf4e6f12223b4705c7fcc6c29b6
