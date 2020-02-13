@@ -10,12 +10,16 @@
 HarvestApiClient *
 initialize_environment(void)
 {
-	char **env				  = g_get_environ();
+	char **env = g_get_environ();
+
+	const char *_max_connections = g_environ_getenv(env, "HARVEST_SOUP_MAX_CONNECTIONS");
+	const char *_logger_level	 = g_environ_getenv(env, "HARVEST_SOUP_LOG_LEVEL");
+
 	const char *access_token  = g_environ_getenv(env, "HARVEST_API_ACCESS_TOKEN");
 	const char *contact_email = g_environ_getenv(env, "HARVEST_API_CONTACT_EMAIL");
 	const char *account_id	  = g_environ_getenv(env, "HARVEST_API_ACCOUNT_ID");
-	const int max_connections = atoi(g_environ_getenv(env, "HARVEST_SOUP_MAX_CONNECTIONS"));
-	const int logger_level	  = atoi(g_environ_getenv(env, "HARVEST_SOUP_LOG_LEVEL"));
+	const int max_connections = _max_connections == NULL ? 1 : atoi(_max_connections);
+	const int logger_level	  = _logger_level == NULL ? SOUP_LOGGER_LOG_NONE : atoi(_logger_level);
 
 	g_autoptr(SoupLogger) logger = soup_logger_new(logger_level, -1);
 
