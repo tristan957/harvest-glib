@@ -8,6 +8,26 @@
 
 #include "harvest-glib/client/harvest-client.h"
 
+/**
+ * SECTION: clients
+ * @title: Clients
+ * @short_description: the company clients
+ *
+ * Clients are who are billed for employee time. They can be past clients or current clients. In the
+ * case of the former, the client is considered inactive. Clients can also deal in different
+ * currencies. Not every one uses the US dollar.
+ */
+
+/**
+ * HarvestClient:
+ * @id: the client id
+ * @name: the name of the client
+ * @is_active: whether the client is active
+ * @address: the physical address of the client
+ * @currency: the currency associated with the client
+ * @created_at: the date time the client was created
+ * @updated_at: the date time the client was updated
+ */
 struct _HarvestClient
 {
 	GObject parent_instance;
