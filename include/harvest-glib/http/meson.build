@@ -7,7 +7,7 @@ api_public_headers = [
 ]
 
 request_public_headers = [
-	'request/harvest-pageable.h',
+	'request/harvest-paged-request.h',
 	'request/harvest-request.h',
 ]
 

@@ -4,6 +4,7 @@ component_public_headers = [
 ]
 
 request_public_headers = [
+	'requests/harvest-user-list-active-project-assignments-request.h',
 	'requests/harvest-users-me-request.h',
 ]
 

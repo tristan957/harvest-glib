@@ -18,12 +18,12 @@ harvest_glib_sources = [
     'estimate/harvest-estimate-line-item.c',
     'estimate/harvest-estimate.c',
     'http/api/harvest-api-client.c',
-    'http/response/harvest-links.c',
-    'http/request/harvest-pageable.c',
-    'http/response/harvest-paged.c',
+    'http/request/harvest-paged-request.c',
     'http/request/harvest-request.c',
-    'http/response/harvest-response.c',
+    'http/response/harvest-links.c',
+    'http/response/harvest-paged.c',
     'http/response/harvest-response-metadata.c',
+    'http/response/harvest-response.c',
     'invoice/harvest-invoice-item-category.c',
     'invoice/harvest-invoice-line-item.c',
     'invoice/harvest-invoice.c',
@@ -35,7 +35,8 @@ harvest_glib_sources = [
     'time-entry/requests/harvest-late-request.c',
     'user/harvest-user-project-assignment.c',
     'user/harvest-user.c',
-    'user/requests/harvest-users-me-request.c'
+    'user/requests/harvest-user-list-active-project-assignments-request.c',
+    'user/requests/harvest-users-me-request.c',
 ]
 
 harvest_glib_c_args = [
