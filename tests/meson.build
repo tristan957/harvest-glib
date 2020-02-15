@@ -18,6 +18,18 @@ c_args = [
 	'-DG_LOG_DOMAIN="harvest-glib-testing"',
 ]
 
+if get_option('buildtype') == 'release'
+    c_args += [
+        '-DG_DISABLE_ASSERT',
+        '-DG_DISABLE_CHECKS',
+        '-DG_DISABLE_CAST_CHECKS',
+    ]
+elif get_option('buildtype').startswith('debug')
+    c_args += [
+        '-DG_ENABLE_DEBUG',
+    ]
+endif
+
 include_root = join_paths('..', 'include')
 
 foreach test_name, value : harvest_tests

@@ -6,6 +6,8 @@
 #include <glib/gi18n-lib.h>
 
 #include "harvest-glib/http/harvest-http.h"
+#include "harvest-glib/http/request/harvest-paged-request.h"
+#include "harvest-glib/http/request/harvest-request.h"
 #include "harvest-glib/http/response/harvest-response-metadata.h"
 #include "harvest-glib/time-entry/requests/harvest-late-request.h"
 
@@ -23,7 +25,7 @@ struct _HarvestLATERequest
 	GDateTime *to;
 };
 
-G_DEFINE_TYPE(HarvestLATERequest, harvest_late_request, HARVEST_TYPE_REQUEST)
+G_DEFINE_TYPE(HarvestLATERequest, harvest_late_request, HARVEST_TYPE_PAGED_REQUEST)
 
 enum HarvestLATERequest
 {
@@ -40,6 +42,24 @@ enum HarvestLATERequest
 };
 
 static GParamSpec *obj_properties[N_PROPS];
+
+static char *G_GNUC_CONST G_GNUC_WARN_UNUSED_RESULT
+harvest_late_request_serialize_query_params(HarvestLATERequest *self)
+{
+	g_autoptr(GString) query_params = g_string_new(NULL);
+
+	g_autofree char *paging_params = HARVEST_REQUEST_CLASS(harvest_late_request_parent_class)
+										 ->serialize_query_params(HARVEST_REQUEST(self));
+
+	if (self->user_id != NULL)
+		g_string_append_printf(query_params, "&user_id=%d", g_variant_get_int32(self->user_id));
+	if (self->client_id != NULL)
+		g_string_append_printf(query_params, "&client_id=%d", g_variant_get_int32(self->client_id));
+	if (paging_params != NULL)
+		g_string_append(query_params, paging_params);
+
+	return g_strdup(query_params->str);
+}
 
 static void
 harvest_late_request_finalize(GObject *obj)
@@ -64,19 +84,6 @@ harvest_late_request_finalize(GObject *obj)
 		g_date_time_unref(self->updated_since);
 
 	G_OBJECT_CLASS(harvest_late_request_parent_class)->finalize(obj);
-}
-
-static const char *G_GNUC_CONST G_GNUC_WARN_UNUSED_RESULT
-harvest_late_request_serialize_params(HarvestLATERequest *self)
-{
-	g_autoptr(GString) string = g_string_new(NULL);
-
-	if (self->user_id != NULL)
-		g_string_append_printf(string, "&user_id=%d", g_variant_get_int32(self->user_id));
-	if (self->client_id != NULL)
-		g_string_append_printf(string, "&client_id=%d", g_variant_get_int32(self->client_id));
-
-	return g_strdup(string->str);
 }
 
 static void
@@ -132,11 +139,13 @@ harvest_late_request_set_property(GObject *obj, guint prop_id, const GValue *val
 static void
 harvest_late_request_class_init(HarvestLATERequestClass *klass)
 {
-	GObjectClass *obj_class = G_OBJECT_CLASS(klass);
+	GObjectClass *obj_class		   = G_OBJECT_CLASS(klass);
+	HarvestRequestClass *req_class = HARVEST_REQUEST_CLASS(klass);
 
-	obj_class->finalize		= harvest_late_request_finalize;
-	obj_class->get_property = harvest_late_request_get_property;
-	obj_class->set_property = harvest_late_request_set_property;
+	obj_class->finalize				  = harvest_late_request_finalize;
+	obj_class->get_property			  = harvest_late_request_get_property;
+	obj_class->set_property			  = harvest_late_request_set_property;
+	req_class->serialize_query_params = harvest_late_request_serialize_query_params;
 
 	// TODO: Finish implemeting this
 	obj_properties[PROP_USER_ID]   = g_param_spec_variant("user-id", _("User ID"), _(""),
@@ -172,8 +181,7 @@ harvest_late_request_new(const char *first_prop_name, ...)
 		= harvest_response_metadata_new(G_TYPE_NONE, HTTP_STATUS_OK);
 
 	g_object_set(req, "http-method", HTTP_METHOD_GET, "endpoint", "/time_entries",
-		"response-metadata", response_metadata, "query-params",
-		harvest_late_request_serialize_params(req), NULL);
+		"response-metadata", response_metadata, NULL);
 
 	return req;
 }

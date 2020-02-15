@@ -6,11 +6,13 @@
 
 #include <glib-object.h>
 
+#include "harvest-glib/http/request/harvest-request.h"
+
 G_BEGIN_DECLS
 
 #define HARVEST_TYPE_USERS_ME_REQUEST (harvest_users_me_request_get_type())
 G_DECLARE_FINAL_TYPE(
-	HarvestUsersMeRequest, harvest_users_me_request, HARVEST, HarvestUsersMe, GObject)
+	HarvestUsersMeRequest, harvest_users_me_request, HARVEST, HarvestUsersMe, HarvestRequest)
 
 HarvestUsersMeRequest *harvest_users_me_request_new(void) G_GNUC_WARN_UNUSED_RESULT;
 

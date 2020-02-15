@@ -261,29 +261,37 @@ harvest_api_client_async_callback(
 static SoupMessage *
 create_message(HarvestApiClient *self, HarvestRequest *req)
 {
-	SoupMessage *msg	 = NULL;
-	g_autofree char *uri = g_strdup_printf("%s%s", self->server, harvest_request_get_endpoint(req));
-	gboolean response_has_body = harvest_request_get_data(req) != NULL;
-	char *body				   = NULL;
-	gsize len				   = 0;
+	SoupMessage *msg				= NULL;
+	GValue *data					= harvest_request_get_data(req);
+	const gboolean request_has_data = data != NULL;
+	char *body						= NULL;
+	gsize len						= 0;
 
-	if (response_has_body) {
-		body = json_gobject_to_data(harvest_request_get_data(req), &len);
-		len	 = strlen(body);
+	g_autoptr(GString) uri = g_string_new(self->server);
+	g_string_append(uri, harvest_request_get_endpoint(req));
+	g_autofree char *query_params = harvest_request_get_query_params(req);
+	if (query_params != NULL)
+		g_string_append(uri, query_params);
+
+	if (request_has_data) {
+		if (G_VALUE_HOLDS_OBJECT(data)) {
+			body = json_gobject_to_data(g_value_get_object(data), &len);
+			len	 = strlen(body);
+		} else {
+			g_error("create_message: request has a body type that does not have serialization "
+					"implemented");
+		}
 	}
 
 	switch (harvest_request_get_http_method(req)) {
 	case HTTP_METHOD_GET:
-		msg = soup_message_new("GET", uri);
+		msg = soup_message_new("GET", uri->str);
 		soup_message_set_request(
-			msg, response_has_body ? "application/json" : NULL, SOUP_MEMORY_TAKE, body, len);
+			msg, request_has_data ? "application/json" : NULL, SOUP_MEMORY_TAKE, body, len);
 		break;
 	case HTTP_METHOD_POST:
-		break;
 	case HTTP_METHOD_PATCH:
-		break;
 	case HTTP_METHOD_DELETE:
-		break;
 	default:
 		g_return_val_if_reached(NULL);
 	}

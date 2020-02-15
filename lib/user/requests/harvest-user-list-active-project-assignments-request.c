@@ -27,6 +27,24 @@ enum HarvestUserListActiveProjectAssignmentsRequest
 
 static GParamSpec *obj_properties[N_PROPS];
 
+static char *
+harvest_user_list_active_project_assignments_request_serialize_query_params(
+	HarvestUserListActiveProjectAssignmentsRequest *self)
+{
+	g_autofree char *paging_params
+		= HARVEST_REQUEST_CLASS(harvest_user_list_active_project_assignments_request_parent_class)
+			  ->serialize_query_params(HARVEST_REQUEST(self));
+
+	g_autoptr(GString) query_params = g_string_new(NULL);
+	if (self->updated_since != NULL)
+		g_string_append_printf(
+			query_params, "&%s", g_date_time_format_iso8601(self->updated_since));
+	if (paging_params != NULL)
+		g_string_append(query_params, paging_params);
+
+	return g_strdup(query_params->str);
+}
+
 static void
 harvest_user_list_active_project_assignments_request_finalize(GObject *obj)
 {
@@ -68,6 +86,7 @@ harvest_user_list_active_project_assignments_request_set_property(
 	switch (prop_id) {
 	case PROP_USER_ID:
 		self->user_id = g_value_get_int(val);
+		break;
 	case PROP_UPDATED_SINCE:
 		g_date_time_unref(self->updated_since);
 		self->updated_since = g_value_dup_boxed(val);
@@ -81,11 +100,14 @@ static void
 harvest_user_list_active_project_assignments_request_class_init(
 	HarvestUserListActiveProjectAssignmentsRequestClass *klass)
 {
-	GObjectClass *obj_class = G_OBJECT_CLASS(klass);
+	GObjectClass *obj_class		   = G_OBJECT_CLASS(klass);
+	HarvestRequestClass *req_class = HARVEST_REQUEST_CLASS(klass);
 
 	obj_class->finalize		= harvest_user_list_active_project_assignments_request_finalize;
 	obj_class->get_property = harvest_user_list_active_project_assignments_request_get_property;
 	obj_class->set_property = harvest_user_list_active_project_assignments_request_set_property;
+	req_class->serialize_query_params
+		= harvest_user_list_active_project_assignments_request_serialize_query_params;
 
 	obj_properties[PROP_USER_ID]	   = g_param_spec_int("user-id", _("User ID"),
 		  _("ID of the user to retrieve project assignments of."), 0, INT_MAX, 0,
@@ -108,7 +130,6 @@ harvest_user_list_active_project_assignments_request_new(
 {
 	HarvestUserListActiveProjectAssignmentsRequest *req = NULL;
 
-	// Short-circuit for calls supplying no properties
 	if (first_prop_name == NULL) {
 		req = HARVEST_USER_LIST_ACTIVE_PROJECT_ASSIGNMENTS_REQUEST(g_object_new_with_properties(
 			HARVEST_TYPE_USER_LIST_ACTIVE_PROJECT_ASSIGNMENTS_REQUEST, 0, NULL, NULL));

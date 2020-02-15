@@ -11,6 +11,11 @@ project(
     ],
 )
 
+add_project_arguments(
+    '-Wno-incompatible-pointer-types',
+    language: 'c',
+)
+
 version_components = meson.project_version().split('.')
 
 harvest_glib_major_version = version_components[0]
