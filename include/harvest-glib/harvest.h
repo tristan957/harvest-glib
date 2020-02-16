@@ -15,7 +15,7 @@
 #include "harvest-glib/http/api/harvest-api-client.h"
 #include "harvest-glib/http/harvest-http-enum-types.h"
 #include "harvest-glib/http/harvest-http.h"
-#include "harvest-glib/http/request/harvest-pageable.h"
+#include "harvest-glib/http/request/harvest-paged-request.h"
 #include "harvest-glib/http/request/harvest-request.h"
 #include "harvest-glib/http/response/harvest-links.h"
 #include "harvest-glib/http/response/harvest-paged.h"
