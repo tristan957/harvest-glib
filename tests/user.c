@@ -3,8 +3,7 @@
 #include <glib.h>
 #include <libsoup/soup.h>
 
-#include "harvest-glib/http/api/harvest-api-client.h"
-#include "harvest-glib/user/harvest-user.h"
+#include <harvest-glib/harvest.h>
 
 static HarvestApiClient *CLIENT;
 
