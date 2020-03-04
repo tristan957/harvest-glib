@@ -3,7 +3,7 @@
 #include <glib.h>
 #include <libsoup/soup.h>
 
-#include <harvest-glib/harvest.h>
+#include "harvest-glib/harvest.h"
 
 static HarvestApiClient *CLIENT;
 
@@ -16,7 +16,7 @@ test_harvest_get_me(void)
 }
 
 int
-main(int argc, char **argv)
+main(int argc, char *argv[])
 {
 	g_test_init(&argc, &argv, NULL);
 
