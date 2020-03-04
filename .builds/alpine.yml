@@ -20,4 +20,4 @@ tasks:
       set +x
       . ~/.harvest-glib.env
       set -x
-      ninja test -C build
+      ninja -C build test
