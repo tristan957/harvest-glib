@@ -18,13 +18,7 @@ c_args = [
 	'-DG_LOG_DOMAIN="harvest-glib-testing"',
 ]
 
-if get_option('buildtype') == 'release'
-    c_args += [
-        '-DG_DISABLE_ASSERT',
-        '-DG_DISABLE_CHECKS',
-        '-DG_DISABLE_CAST_CHECKS',
-    ]
-elif get_option('buildtype').startswith('debug')
+if get_option('buildtype').startswith('debug')
     c_args += [
         '-DG_ENABLE_DEBUG',
     ]
