@@ -33,6 +33,6 @@ libsoup_dep = dependency('libsoup-2.4', version: '>= 2.68.1', required: true, fa
 
 subdir('include')
 subdir('lib')
-if get_option('with-tests')
+if get_option('tests')
     subdir('tests')
 endif
