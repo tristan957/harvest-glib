@@ -1,11 +1,17 @@
+# Project files
 *.ui#
 *.ui~
+
+# User files
 .env
 .flatpak*
 .vscode/
 build
 *.http
 .exrc
+.buildconfig
+.clangd
+compile_commands.json
 
 # Don't ignore wraps
 subprojects/*
