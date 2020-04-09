@@ -24,7 +24,7 @@ harvest_glib_sources = [
     'http/request/harvest-paged-request.c',
     'http/request/harvest-request.c',
     'http/response/harvest-links.c',
-    'http/response/harvest-paged.c',
+    'http/response/harvest-paged-response.c',
     'http/response/harvest-response-metadata.c',
     'http/response/harvest-response.c',
     'invoice/harvest-invoice-enum-types.c',
@@ -41,6 +41,7 @@ harvest_glib_sources = [
     'user/harvest-user.c',
     'user/requests/harvest-user-list-active-project-assignments-request.c',
     'user/requests/harvest-users-me-request.c',
+    'user/responses/harvest-user-list-active-project-assignments-response.c',
 ]
 
 harvest_glib_c_args = [

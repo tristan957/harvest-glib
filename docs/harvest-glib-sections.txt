@@ -1,0 +1,15 @@
+<INCLUDE>harvest-glib/harvest.h<INCLUDE>
+
+<SECTION>
+<FILE>client/harvest-client</FILE>
+<TITLE>HarvestClient</TITLE>
+HARVEST_TYPE_CLIENT
+HarvestClient
+</SECTION>
+
+<SECTION>
+<FILE>client/harvest-company</FILE>
+<TITLE>HarvestCompany</TITLE>
+HARVEST_TYPE_COMPANY
+HarvestCompany
+</SECTION>

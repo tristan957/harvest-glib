@@ -73,10 +73,10 @@ harvest_response_metadata_class_init(HarvestResponseMetadataClass *klass)
 	obj_properties[PROP_EXPECTED_STATUS] = g_param_spec_enum("expected-status",
 		_("Expected Status"), _("The expected status code the response should come back with."),
 		HTTP_TYPE_STATUS_CODE, HTTP_STATUS_OK,
-		G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY | G_PARAM_STATIC_STRINGS);
+		G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
 	obj_properties[PROP_BODY_TYPE]
 		= g_param_spec_gtype("body-type", _("Body Type"), _("The GType of the response body."),
-			G_TYPE_NONE, G_PARAM_CONSTRUCT_ONLY | G_PARAM_WRITABLE | G_PARAM_STATIC_STRINGS);
+			G_TYPE_NONE, G_PARAM_CONSTRUCT_ONLY | G_PARAM_WRITABLE);
 
 	g_object_class_install_properties(obj_class, N_PROPS, obj_properties);
 }

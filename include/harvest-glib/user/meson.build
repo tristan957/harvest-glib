@@ -8,6 +8,10 @@ request_public_headers = [
 	'requests/harvest-users-me-request.h',
 ]
 
+response_public_headers = [
+	'responses/harvest-user-list-active-project-assignments-response.h'
+]
+
 component_header_subdir = join_paths(harvest_glib_header_subdir, 'user')
 requests_header_subdir = join_paths(component_header_subdir, 'requests')
 

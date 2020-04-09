@@ -149,9 +149,9 @@ harvest_late_request_class_init(HarvestLATERequestClass *klass)
 
 	// TODO: Finish implemeting this
 	obj_properties[PROP_USER_ID]   = g_param_spec_variant("user-id", _("User ID"), _(""),
-		  G_VARIANT_TYPE_INT32, NULL, G_PARAM_CONSTRUCT | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+		  G_VARIANT_TYPE_INT32, NULL, G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
 	obj_properties[PROP_CLIENT_ID] = g_param_spec_variant("client-id", _("Client ID"), _(""),
-		G_VARIANT_TYPE_INT32, NULL, G_PARAM_CONSTRUCT | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+		G_VARIANT_TYPE_INT32, NULL, G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
 
 	g_object_class_install_properties(obj_class, 3, obj_properties);
 }

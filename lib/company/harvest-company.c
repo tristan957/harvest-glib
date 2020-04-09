@@ -10,6 +10,35 @@
 #include "harvest-glib/company/harvest-company.h"
 #include "harvest-glib/company/requests/harvest-get-company-request.h"
 
+/**
+ * SECTION: company
+ * @title: Company
+ * @short_description: managerial entity
+ *
+ * A company is the overall manager of a Harvest workspace. Workspaces get some settings and
+ * features from company-wide flags.
+ */
+
+/**
+ * HarvestCompany:
+ * @base_uri: dsfsf
+ * @full_domain: domain that the Harvest workspace can be accessed at
+ * @name: the name of the company
+ * @is_active: whether the company is active
+ * @week_start_day: what day the company starts weeks on
+ * @wants_timestamp_timers:
+ * @time_format: the time format used
+ * @plan_type: the Harvest plan the company has subscribed to
+ * @clock: df
+ * @decimal_symbol: fds
+ * @thousands_operator: sdf
+ * @color_scheme: sdf
+ * @weekly_capacity: sdf
+ * @expense_feature: whether the expense feature is enabled in the workspace
+ * @invoice_feature: whether the invoice feature is enabled in the workspace
+ * @estimate_feature: whether the estimate feature is enabled in the workspace
+ * @aapproval_feature: whether the approval feature is enabled in the workspace
+ */
 struct _HarvestCompany
 {
 	GObject parent_instance;
@@ -67,7 +96,7 @@ static gboolean
 harvest_company_json_deserialize_property(JsonSerializable *serializable, const gchar *prop_name,
 	GValue *val, GParamSpec *pspec, JsonNode *prop_node)
 {
-	if (g_strcmp0(prop_name, "week-start-day") == 0) {
+	if (pspec == obj_properties[PROP_WEEK_START_DAY]) {
 		const char *week_start_day = json_node_get_string(prop_node);
 		if (g_strcmp0(week_start_day, "Saturday") == 0) {
 			g_value_set_enum(val, (gint) HARVEST_WEEK_START_DAY_SATURDAY);
@@ -80,7 +109,7 @@ harvest_company_json_deserialize_property(JsonSerializable *serializable, const 
 		}
 
 		return TRUE;
-	} else if (g_strcmp0(prop_name, "time-format") == 0) {
+	} else if (pspec == obj_properties[PROP_TIME_FORMAT]) {
 		const char *time_format = json_node_get_string(prop_node);
 		if (g_strcmp0(time_format, "decimal") == 0) {
 			g_value_set_enum(val, (gint) HARVEST_TIME_FORMAT_DECIMAL);
@@ -91,7 +120,7 @@ harvest_company_json_deserialize_property(JsonSerializable *serializable, const 
 		}
 
 		return TRUE;
-	} else if (g_strcmp0(prop_name, "plan-type") == 0) {
+	} else if (pspec == obj_properties[PROP_PLAN_TYPE]) {
 		const char *plan_type = json_node_get_string(prop_node);
 		if (g_strcmp0(plan_type, "trial") == 0) {
 			g_value_set_enum(val, (gint) HARVEST_PLAN_TYPE_TRIAL);
@@ -106,7 +135,7 @@ harvest_company_json_deserialize_property(JsonSerializable *serializable, const 
 		}
 
 		return TRUE;
-	} else if (g_strcmp0(prop_name, "clock") == 0) {
+	} else if (pspec == obj_properties[PROP_CLOCK]) {
 		const char *clock = json_node_get_string(prop_node);
 		if (g_strcmp0(clock, "12h") == 0) {
 			g_value_set_enum(val, (gint) HARVEST_CLOCK_12H);
@@ -293,62 +322,62 @@ harvest_company_class_init(HarvestCompanyClass *klass)
 
 	obj_properties[PROP_BASE_URI]
 		= g_param_spec_string("base-uri", _("Base URI"), _("The Harvest URL for the company."),
-			NULL, G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS);
+			NULL, G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
 	obj_properties[PROP_FULL_DOMAIN] = g_param_spec_string("full-domain", _("Full Domain"),
 		_("The Harvest domain for the company."), NULL,
-		G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS);
+		G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
 	obj_properties[PROP_NAME]
 		= g_param_spec_string("name", _("Name"), _("The name of the company."), NULL,
-			G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS);
+			G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
 	obj_properties[PROP_IS_ACTIVE]		= g_param_spec_boolean("is-active", _("Is Active"),
 		 _("Whether the company is active or archived."), FALSE,
-		 G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS);
+		 G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
 	obj_properties[PROP_WEEK_START_DAY] = g_param_spec_enum("week-start-day", _("Week Start Day"),
 		_("The week day used as the start of the week. Returns one of: Saturday, Sunday, or "
 		  "Monday."),
 		HARVEST_TYPE_WEEK_START_DAY, HARVEST_WEEK_START_DAY_SUNDAY,
-		G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS);
+		G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
 	obj_properties[PROP_WANTS_TIMESTAMP_TIMERS]
 		= g_param_spec_boolean("wants-timestamp-timers", _("Wants Timestamp Timers"),
 			_("Whether time is tracked via duration or start and end times."), FALSE,
-			G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS);
+			G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
 	obj_properties[PROP_TIME_FORMAT]	= g_param_spec_enum("time-format", _("Time Format"),
 		   _("The format used to display time in Harvest. Returns either decimal or hours_minutes."),
 		   HARVEST_TYPE_TIME_FORMAT, HARVEST_TIME_FORMAT_HOURS_MINUTES,
-		   G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS);
+		   G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
 	obj_properties[PROP_PLAN_TYPE]		= g_param_spec_enum("plan-type", _("Plan Type"),
 		 _("The type of plan the company is on. Examples: trial, free, or simple-v4"),
 		 HARVEST_TYPE_PLAN_TYPE, HARVEST_PLAN_TYPE_FREE,
-		 G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS);
+		 G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
 	obj_properties[PROP_CLOCK]			= g_param_spec_enum("clock", _("Clock"),
 		 _("Used to represent whether the company is using a 12-hour or 24-hour clock. Returns "
 		   "either 12h or 24h."),
 		 HARVEST_TYPE_CLOCK, HARVEST_CLOCK_12H,
-		 G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS);
+		 G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
 	obj_properties[PROP_DECIMAL_SYMBOL] = g_param_spec_string("decimal-symbol", _("Decimal Symbol"),
 		_("Symbol used when formatting decimals."), NULL,
-		G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS);
+		G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
 	obj_properties[PROP_THOUSANDS_OPERATOR] = g_param_spec_string("thousands-operator",
 		_("Thousands Operator"), _("Separator used when formatting numbers."), NULL,
-		G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS);
+		G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
 	obj_properties[PROP_COLOR_SCHEME]		= g_param_spec_string("color-scheme", _("Color Scheme"),
 		  _("The color scheme being used in the Harvest web client."), NULL,
-		  G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS);
+		  G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
 	obj_properties[PROP_WEEKLY_CAPACITY]	= g_param_spec_uint("weekly-capacity",
 		   _("Weekly Capacity"), _("The weekly capacity in seconds."), 0, UINT_MAX, 0,
-		   G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS);
+		   G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
 	obj_properties[PROP_EXPENSE_FEATURE]	= g_param_spec_boolean("expense-feature", _(" Feature"),
 		   _("Whether the expense module is enabled."), FALSE,
-		   G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS);
+		   G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
 	obj_properties[PROP_INVOICE_FEATURE]	= g_param_spec_boolean("invoice-feature", _(" Feature"),
 		   _("Whether the invoice module is enabled."), FALSE,
-		   G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS);
+		   G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
 	obj_properties[PROP_ESTIMATE_FEATURE] = g_param_spec_boolean("estimate-feature", _(" Feature"),
 		_("Whether the estimate module is enabled."), FALSE,
-		G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS);
+		G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
 	obj_properties[PROP_APPROVAL_FEATURE] = g_param_spec_boolean("approval-feature", _(" Feature"),
 		_("Whether the approval module is enabled."), FALSE,
-		G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS);
+		G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
 
 	g_object_class_install_properties(obj_class, N_PROPS, obj_properties);
 }

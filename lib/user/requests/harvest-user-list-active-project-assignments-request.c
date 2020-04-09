@@ -1,10 +1,13 @@
 #include "config.h"
 
+#include <limits.h>
+
 #include <glib-object.h>
 #include <glib/gi18n.h>
 
 #include "harvest-glib/http/request/harvest-paged-request.h"
 #include "harvest-glib/user/requests/harvest-user-list-active-project-assignments-request.h"
+#include "harvest-glib/user/responses/harvest-user-list-active-project-assignments-response.h"
 
 struct _HarvestUserListActiveProjectAssignmentsRequest
 {
@@ -51,7 +54,8 @@ harvest_user_list_active_project_assignments_request_finalize(GObject *obj)
 	HarvestUserListActiveProjectAssignmentsRequest *self
 		= HARVEST_USER_LIST_ACTIVE_PROJECT_ASSIGNMENTS_REQUEST(obj);
 
-	g_date_time_unref(self->updated_since);
+	if (self->updated_since)
+		g_date_time_unref(self->updated_since);
 
 	G_OBJECT_CLASS(harvest_user_list_active_project_assignments_request_parent_class)
 		->finalize(obj);
@@ -88,7 +92,8 @@ harvest_user_list_active_project_assignments_request_set_property(
 		self->user_id = g_value_get_int(val);
 		break;
 	case PROP_UPDATED_SINCE:
-		g_date_time_unref(self->updated_since);
+		if (self->updated_since)
+			g_date_time_unref(self->updated_since);
 		self->updated_since = g_value_dup_boxed(val);
 		break;
 	default:
@@ -111,10 +116,10 @@ harvest_user_list_active_project_assignments_request_class_init(
 
 	obj_properties[PROP_USER_ID]	   = g_param_spec_int("user-id", _("User ID"),
 		  _("ID of the user to retrieve project assignments of."), 0, INT_MAX, 0,
-		  G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS);
+		  G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
 	obj_properties[PROP_UPDATED_SINCE] = g_param_spec_boxed("updated-since", _("Updated Since"),
 		_("Only return project assignments that have been updated since the given date and time."),
-		G_TYPE_DATE_TIME, G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS);
+		G_TYPE_DATE_TIME, G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
 
 	g_object_class_install_properties(obj_class, N_PROPS, obj_properties);
 }
@@ -141,11 +146,9 @@ harvest_user_list_active_project_assignments_request_new(
 		va_end(var_args);
 	}
 
-	g_autoptr(HarvestResponseMetadata) response_metadata
-		= harvest_response_metadata_new(G_TYPE_NONE, HTTP_STATUS_OK);
-
+	g_autoptr(HarvestResponseMetadata) response_metadata = harvest_response_metadata_new(
+		HARVEST_TYPE_USER_LIST_ACTIVE_PROJECT_ASSIGNMENTS_RESPONSE, HTTP_STATUS_OK);
 	g_autofree char *endpoint = g_strdup_printf("/users/%d/project_assignments", user_id);
-
 	g_object_set(req, "user-id", user_id, "http-method", HTTP_METHOD_GET, "endpoint", endpoint,
 		"response-metadata", response_metadata, NULL);
 

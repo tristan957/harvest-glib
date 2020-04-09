@@ -16,7 +16,7 @@ G_DECLARE_DERIVABLE_TYPE(
 
 struct _HarvestPagedRequestClass
 {
-	GObjectClass parent_class;
+	HarvestRequestClass parent_class;
 };
 
 void harvest_paged_request_next_page(HarvestPagedRequest *self);

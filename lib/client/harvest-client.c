@@ -9,9 +9,9 @@
 #include "harvest-glib/client/harvest-client.h"
 
 /**
- * SECTION: clients
- * @title: Clients
- * @short_description: the company clients
+ * SECTION: client
+ * @title: Client
+ * @short_description: clients that companies work for
  *
  * Clients are who are billed for employee time. They can be past clients or current clients. In the
  * case of the former, the client is considered inactive. Clients can also deal in different
@@ -65,15 +65,8 @@ static gboolean
 harvest_client_json_deserialize_property(JsonSerializable *serializable, const gchar *prop_name,
 	GValue *val, GParamSpec *pspec, JsonNode *prop_node)
 {
-	if (g_strcmp0(prop_name, "created_at") == 0 || g_strcmp0(prop_name, "updated_at") == 0) {
-		const gchar *ds = json_node_get_string(prop_node);
-		if (ds == NULL) {
-			g_value_set_boxed(val, NULL);
-
-			return TRUE;
-		}
-
-		const GDateTime *dt = g_date_time_new_from_iso8601(ds, NULL);
+	if (pspec == obj_properties[PROP_CREATED_AT] || pspec == obj_properties[PROP_UPDATED_AT]) {
+		const GDateTime *dt = g_date_time_new_from_iso8601(json_node_get_string(prop_node), NULL);
 		g_value_set_boxed(val, dt);
 
 		return TRUE;
@@ -188,26 +181,24 @@ harvest_client_class_init(HarvestClientClass *klass)
 	obj_class->get_property = harvest_client_get_property;
 	obj_class->set_property = harvest_client_set_property;
 
-	obj_properties[PROP_ID] = g_param_spec_int("id", _("ID"), _("Unique ID for the client."), 0,
-		INT_MAX, 0, G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
-	obj_properties[PROP_NAME]
-		= g_param_spec_string("name", _("Name"), _("A textual description of the client."), NULL,
-			G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS);
-	obj_properties[PROP_IS_ACTIVE] = g_param_spec_boolean("is_active", _("Is Active"),
-		_("Whether the client is active or archived."), TRUE,
-		G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
-	obj_properties[PROP_ADDRESS]
-		= g_param_spec_string("address", _("Address"), _("The physical address for the client."),
-			NULL, G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS);
+	obj_properties[PROP_ID]	  = g_param_spec_int("id", _("ID"), _("Unique ID for the client."), 0,
+		  INT_MAX, 0, G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
+	obj_properties[PROP_NAME] = g_param_spec_string("name", _("Name"),
+		_("A textual description of the client."), NULL, G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
+	obj_properties[PROP_IS_ACTIVE]	= g_param_spec_boolean("is_active", _("Is Active"),
+		 _("Whether the client is active or archived."), TRUE,
+		 G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
+	obj_properties[PROP_ADDRESS]	= g_param_spec_string("address", _("Address"),
+		   _("The physical address for the client."), NULL, G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
 	obj_properties[PROP_CURRENCY]	= g_param_spec_string("currency", _("Currency"),
 		  _("The currency code associated with this client."), NULL,
-		  G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS);
+		  G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
 	obj_properties[PROP_CREATED_AT] = g_param_spec_boxed("created_at", _("Created At"),
 		_("Date and time the client was created."), G_TYPE_DATE_TIME,
-		G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS);
+		G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
 	obj_properties[PROP_UPDATED_AT] = g_param_spec_boxed("updated_at", _("Updated At"),
 		_("Date and time the client was last updated."), G_TYPE_DATE_TIME,
-		G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS);
+		G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
 
 	g_object_class_install_properties(obj_class, N_PROPS, obj_properties);
 }

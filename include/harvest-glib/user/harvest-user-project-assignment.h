@@ -12,4 +12,6 @@ G_BEGIN_DECLS
 G_DECLARE_FINAL_TYPE(HarvestUserProjectAssignment, harvest_user_project_assignment, HARVEST,
 	USER_PROJECT_ASSIGNMENT, GObject)
 
+int harvest_user_project_assignment_get_id(HarvestUserProjectAssignment *self);
+
 G_END_DECLS

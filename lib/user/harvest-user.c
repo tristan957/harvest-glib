@@ -10,6 +10,7 @@
 #include "harvest-glib/http/api/harvest-api-client.h"
 #include "harvest-glib/http/response/harvest-response.h"
 #include "harvest-glib/user/harvest-user.h"
+#include "harvest-glib/user/requests/harvest-user-list-active-project-assignments-request.h"
 #include "harvest-glib/user/requests/harvest-users-me-request.h"
 
 struct _HarvestUser
@@ -73,21 +74,28 @@ enum HarvestUserProps
 
 static GParamSpec *obj_properties[N_PROPS];
 
+static void
+add_to_roles(
+	G_GNUC_UNUSED JsonArray *array, G_GNUC_UNUSED guint index, JsonNode *node, gpointer user_data)
+{
+	GPtrArray *roles = (GPtrArray *) (user_data);
+	g_ptr_array_add(roles, json_node_dup_string(node));
+}
+
 static gboolean
 harvest_user_json_deserialize_property(JsonSerializable *serializable, const gchar *prop_name,
 	GValue *val, GParamSpec *pspec, JsonNode *prop_node)
 {
-	if (g_strcmp0(prop_name, "created-at") == 0 || g_strcmp0(prop_name, "updated-at") == 0) {
+	if (pspec == obj_properties[PROP_CREATED_AT] || pspec == obj_properties[PROP_UPDATED_AT]) {
 		const GDateTime *dt = g_date_time_new_from_iso8601(json_node_get_string(prop_node), NULL);
 		g_value_set_boxed(val, dt);
 
 		return TRUE;
-	} else if (g_strcmp0(prop_name, "roles") == 0) {
+	} else if (pspec == obj_properties[PROP_ROLES]) {
 		JsonArray *arr	   = json_node_get_array(prop_node);
 		const guint length = json_array_get_length(arr);
-		GPtrArray *roles   = g_ptr_array_sized_new(length);
-		for (guint i = 0; i < length; i++)
-			g_ptr_array_add(roles, (gpointer) json_array_get_string_element(arr, i));
+		GPtrArray *roles   = g_ptr_array_new_full(length, g_free);
+		json_array_foreach_element(arr, add_to_roles, roles);
 		g_value_set_boxed(val, roles);
 
 		return TRUE;
@@ -122,22 +130,12 @@ harvest_user_finalize(GObject *obj)
 	g_free(self->email);
 	g_free(self->telephone);
 	g_free(self->timezone);
-	if (self->roles != NULL) {
-		/**
-		 * Always remove the last one so that the array does not need to be resized. If we
-		 * always remove the last one in conjunction with g_ptr_array_remove_index_fast, then
-		 * the reverse order of the array should be preserved and we will be able to iterate
-		 * linearly.
-		 */
-		for (int i = self->roles->len - 1; i >= 0; i--)
-			g_free(g_ptr_array_remove_index_fast(self->roles, i));
-
+	if (self->roles)
 		g_ptr_array_unref(self->roles);
-	}
 	g_free(self->avatar_url);
-	if (self->created_at != NULL)
+	if (self->created_at)
 		g_date_time_unref(self->created_at);
-	if (self->updated_at != NULL)
+	if (self->updated_at)
 		g_date_time_unref(self->updated_at);
 
 	G_OBJECT_CLASS(harvest_user_parent_class)->finalize(obj);
@@ -280,18 +278,8 @@ harvest_user_set_property(GObject *obj, guint prop_id, const GValue *val, GParam
 		self->cost_rate = g_value_get_double(val);
 		break;
 	case PROP_ROLES:
-		if (self->roles != NULL) {
-			/**
-			 * Always remove the last one so that the array does not need to be resized. If we
-			 * always remove the last one in conjunction with g_ptr_array_remove_index_fast, then
-			 * the reverse order of the array should be preserved and we will be able to iterate
-			 * linearly.
-			 */
-			for (int i = self->roles->len - 1; i >= 0; i--)
-				g_free(g_ptr_array_remove_index_fast(self->roles, i));
-
+		if (self->roles)
 			g_ptr_array_unref(self->roles);
-		}
 		self->roles = g_value_dup_boxed(val);
 		break;
 	case PROP_AVATAR_URL:
@@ -430,4 +418,23 @@ harvest_user_get_last_name(HarvestUser *self)
 	g_return_val_if_fail(HARVEST_IS_USER(self), NULL);
 
 	return self->last_name;
+}
+
+int
+harvest_user_get_id(HarvestUser *self)
+{
+	g_return_val_if_fail(HARVEST_IS_USER(self), -1);
+
+	return self->id;
+}
+
+HarvestResponse *
+harvest_user_list_active_project_assignments(HarvestApiClient *client, const unsigned int user_id)
+{
+	g_return_val_if_fail(HARVEST_IS_API_CLIENT(client), NULL);
+
+	g_autoptr(HarvestUserListActiveProjectAssignmentsRequest) request
+		= harvest_user_list_active_project_assignments_request_new(user_id, NULL);
+
+	return harvest_api_client_execute_request_sync(client, HARVEST_REQUEST(request));
 }

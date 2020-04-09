@@ -87,13 +87,13 @@ harvest_response_class_init(HarvestResponseClass *klass)
 	obj_class->set_property = harvest_response_set_property;
 
 	obj_properties[PROP_BODY] = g_param_spec_boxed("body", _("Body"), _("Response body."),
-		G_TYPE_VALUE, G_PARAM_CONSTRUCT_ONLY | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+		G_TYPE_VALUE, G_PARAM_CONSTRUCT_ONLY | G_PARAM_READWRITE);
 	obj_properties[PROP_ERROR]
 		= g_param_spec_boxed("error", _("Error"), _("Why the request errored out."), G_TYPE_ERROR,
-			G_PARAM_CONSTRUCT_ONLY | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+			G_PARAM_CONSTRUCT_ONLY | G_PARAM_READWRITE);
 	obj_properties[PROP_STATUS_CODE] = g_param_spec_enum("status-code", _("Status Code"),
 		_("Status code the response came back with."), HTTP_TYPE_STATUS_CODE, HTTP_STATUS_OK,
-		G_PARAM_CONSTRUCT_ONLY | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+		G_PARAM_CONSTRUCT_ONLY | G_PARAM_READWRITE);
 
 	g_object_class_install_properties(obj_class, N_PROPS, obj_properties);
 }

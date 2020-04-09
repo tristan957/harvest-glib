@@ -40,7 +40,7 @@ static gboolean
 harvest_estimate_item_category_deserialize_property(JsonSerializable *serializable,
 	const gchar *prop_name, GValue *val, GParamSpec *pspec, JsonNode *prop_node)
 {
-	if (g_strcmp0(prop_name, "created_at") == 0 || g_strcmp0(prop_name, "updated_at") == 0) {
+	if (pspec == obj_properties[PROP_CREATED_AT] || pspec == obj_properties[PROP_UPDATED_AT]) {
 		const GDateTime *dt = g_date_time_new_from_iso8601(json_node_get_string(prop_node), NULL);
 		g_value_set_boxed(val, dt);
 
@@ -138,16 +138,16 @@ harvest_estimate_item_category_class_init(HarvestEstimateItemCategoryClass *klas
 
 	obj_properties[PROP_ID]
 		= g_param_spec_int("id", _("ID"), _("Unique ID for the estimate item category."), 0,
-			INT_MAX, 0, G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS);
+			INT_MAX, 0, G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
 	obj_properties[PROP_NAME]
 		= g_param_spec_string("name", _("Name"), _("The name of the estimate item category."), NULL,
-			G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS);
+			G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
 	obj_properties[PROP_CREATED_AT] = g_param_spec_boxed("created_at", _("Created At"),
 		_("Date and time the estimate item category was created."), G_TYPE_DATE_TIME,
-		G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS);
+		G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
 	obj_properties[PROP_UPDATED_AT] = g_param_spec_boxed("updated_at", _("Updated At"),
 		_("Date and time the estimate item category was last updated."), G_TYPE_DATE_TIME,
-		G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS);
+		G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
 
 	g_object_class_install_properties(obj_class, N_PROPS, obj_properties);
 }

@@ -91,51 +91,51 @@ static gboolean
 harvest_time_entry_deserialize_property(JsonSerializable *serializable, const gchar *prop_name,
 	GValue *val, GParamSpec *pspec, JsonNode *prop_node)
 {
-	if (g_strcmp0(prop_name, "spent_date") == 0) {
+	if (pspec == obj_properties[PROP_SPENT_DATE]) {
 		const GDateTime *dt
 			= g_date_time_new_from_abbreviated_date(json_node_get_string(prop_node));
 		g_value_set_boxed(val, dt);
 
 		return TRUE;
-	} else if (g_strcmp0(prop_name, "created_at") == 0 || g_strcmp0(prop_name, "updated_at") == 0
-			   || g_strcmp0(prop_name, "timer_started_at") == 0
-			   || g_strcmp0(prop_name, "started_time") == 0
-			   || g_strcmp0(prop_name, "ended_time") == 0) {
+	} else if (pspec == obj_properties[PROP_CREATED_AT] || pspec == obj_properties[PROP_UPDATED_AT]
+			   || pspec == obj_properties[PROP_TIMER_STARTED_AT]
+			   || pspec == obj_properties[PROP_STARTED_TIME]
+			   || pspec == obj_properties[PROP_ENDED_TIME]) {
 		const GDateTime *dt = g_date_time_new_from_iso8601(json_node_get_string(prop_node), NULL);
 		g_value_set_boxed(val, dt);
 
 		return TRUE;
-	} else if (g_strcmp0(prop_name, "user") == 0) {
+	} else if (pspec == obj_properties[PROP_USER]) {
 		GObject *obj = json_gobject_deserialize(HARVEST_TYPE_USER, prop_node);
 		g_value_set_object(val, obj);
 
 		return TRUE;
-	} else if (g_strcmp0(prop_name, "user_assignment") == 0) {
+	} else if (pspec == obj_properties[PROP_USER_ASSIGNMENT]) {
 		GObject *obj = json_gobject_deserialize(HARVEST_TYPE_PROJECT_USER_ASSIGNMENT, prop_node);
 		g_value_set_object(val, obj);
 
 		return TRUE;
-	} else if (g_strcmp0(prop_name, "client") == 0) {
+	} else if (pspec == obj_properties[PROP_CLIENT]) {
 		GObject *obj = json_gobject_deserialize(HARVEST_TYPE_CLIENT, prop_node);
 		g_value_set_object(val, obj);
 
 		return TRUE;
-	} else if (g_strcmp0(prop_name, "project") == 0) {
+	} else if (pspec == obj_properties[PROP_PROJECT]) {
 		GObject *obj = json_gobject_deserialize(HARVEST_TYPE_PROJECT, prop_node);
 		g_value_set_object(val, obj);
 
 		return TRUE;
-	} else if (g_strcmp0(prop_name, "task") == 0) {
+	} else if (pspec == obj_properties[PROP_TASK]) {
 		GObject *obj = json_gobject_deserialize(HARVEST_TYPE_TASK, prop_node);
 		g_value_set_object(val, obj);
 
 		return TRUE;
-	} else if (g_strcmp0(prop_name, "task_assignment") == 0) {
+	} else if (pspec == obj_properties[PROP_TASK_ASSIGNMEMT]) {
 		GObject *obj = json_gobject_deserialize(HARVEST_TYPE_PROJECT_TASK_ASSIGNMENT, prop_node);
 		g_value_set_object(val, obj);
 
 		return TRUE;
-	} else if (g_strcmp0(prop_name, "invoice") == 0) {
+	} else if (pspec == obj_properties[PROP_INVOICE]) {
 		GObject *obj = json_gobject_deserialize(HARVEST_TYPE_INVOICE, prop_node);
 		g_value_set_object(val, obj);
 
@@ -399,84 +399,84 @@ harvest_time_entry_class_init(HarvestTimeEntryClass *klass)
 	obj_class->set_property = harvest_time_entry_set_property;
 
 	obj_properties[PROP_ID] = g_param_spec_int("id", _("ID"), _("Unique ID for the time entry."), 0,
-		INT_MAX, 0, G_PARAM_CONSTRUCT | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+		INT_MAX, 0, G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
 	obj_properties[PROP_SPENT_DATE]
 		= g_param_spec_boxed("spent_date", _("Spent Date"), _("Date of the time entry."),
-			G_TYPE_DATE_TIME, G_PARAM_CONSTRUCT | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+			G_TYPE_DATE_TIME, G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
 	obj_properties[PROP_USER]			 = g_param_spec_object("user", _("User"),
 		   _("An object containing the id and name of the associated user."), HARVEST_TYPE_USER,
-		   G_PARAM_CONSTRUCT | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+		   G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
 	obj_properties[PROP_USER_ASSIGNMENT] = g_param_spec_object("user_assignment",
 		_("User Assignment"), _("A user assignment object of the associated user."),
 		HARVEST_TYPE_PROJECT_USER_ASSIGNMENT,
-		G_PARAM_CONSTRUCT | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+		G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
 	obj_properties[PROP_CLIENT]			 = g_param_spec_object("client", _("Client"),
 		 _("An object containing the id and name of the associated client."), HARVEST_TYPE_CLIENT,
-		 G_PARAM_CONSTRUCT | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+		 G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
 	obj_properties[PROP_PROJECT]		 = g_param_spec_object("project", _("Project"),
 		_("An object containing the id and name of the associated project."), HARVEST_TYPE_PROJECT,
-		G_PARAM_CONSTRUCT | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+		G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
 	obj_properties[PROP_TASK]			 = g_param_spec_object("task", _("Task"),
 		   _("An object containing the id and name of the associated task."), HARVEST_TYPE_TASK,
-		   G_PARAM_CONSTRUCT | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+		   G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
 	obj_properties[PROP_TASK_ASSIGNMEMT] = g_param_spec_object("task_assignment",
 		_("Task Assignment"), _("A task assignment object of the associated task."),
 		HARVEST_TYPE_PROJECT_TASK_ASSIGNMENT,
-		G_PARAM_CONSTRUCT | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+		G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
 	obj_properties[PROP_INVOICE]		 = g_param_spec_object("invoice", _("Invoice"),
 		_("Once the time entry has been invoiced, this field will include the associated invoice’s "
 		  "id and number."),
-		HARVEST_TYPE_INVOICE, G_PARAM_CONSTRUCT | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+		HARVEST_TYPE_INVOICE, G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
 	obj_properties[PROP_HOURS]			 = g_param_spec_double("hours", _("Hours"),
 		  _("Number of (decimal time) hours tracked in this time entry."), 0, DBL_MAX, 0,
-		  G_PARAM_CONSTRUCT | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+		  G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
 	obj_properties[PROP_NOTES]
 		= g_param_spec_string("notes", _("Notes"), _("Notes attached to the time entry."), NULL,
-			G_PARAM_CONSTRUCT | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+			G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
 	obj_properties[PROP_IS_LOCKED]	   = g_param_spec_boolean("is_locked", _("Is Locked"),
 		_("Whether or not the time entry has been locked."), FALSE,
-		G_PARAM_CONSTRUCT | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+		G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
 	obj_properties[PROP_LOCKED_REASON] = g_param_spec_string("locked_reason", _("Locked Reason"),
 		_("Why the time entry has been locked."), NULL,
-		G_PARAM_CONSTRUCT | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+		G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
 	obj_properties[PROP_IS_CLOSED]	   = g_param_spec_boolean("is_closed", _("Is Closed"),
 		_("Whether or not the time entry has been approved via Timesheet Approval."), FALSE,
-		G_PARAM_CONSTRUCT | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+		G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
 	obj_properties[PROP_IS_BILLED]	   = g_param_spec_boolean("is_billed", _("Is Billed"),
 		_("Whether or not the time entry has been marked as invoiced."), FALSE,
-		G_PARAM_CONSTRUCT | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+		G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
 	obj_properties[PROP_TIMER_STARTED_AT]
 		= g_param_spec_boxed("timer_started_at", _("Timer Started At"),
 			_("Date and time the timer was started (if tracking by duration). Use the ISO 8601 "
 			  "Format."),
-			G_TYPE_DATE_TIME, G_PARAM_CONSTRUCT | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+			G_TYPE_DATE_TIME, G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
 	obj_properties[PROP_STARTED_TIME]  = g_param_spec_boxed("started_time", _("Started Time"),
 		 _("Time the time entry was started (if tracking by start/end times)."), G_TYPE_DATE_TIME,
-		 G_PARAM_CONSTRUCT | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+		 G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
 	obj_properties[PROP_ENDED_TIME]	   = g_param_spec_boxed("ended_time", _("Ended Time"),
 		   _("Time the time entry was ended (if tracking by start/end times)."), G_TYPE_DATE_TIME,
-		   G_PARAM_CONSTRUCT | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+		   G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
 	obj_properties[PROP_IS_RUNNING]	   = g_param_spec_boolean("is_running", _("Is Running"),
 		   _("Whether or not the time entry is currently running."), FALSE,
-		   G_PARAM_CONSTRUCT | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+		   G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
 	obj_properties[PROP_BILLABLE]	   = g_param_spec_boolean("billable", _("Billable"),
 		 _("Whether or not the time entry is billable."), FALSE,
-		 G_PARAM_CONSTRUCT | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+		 G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
 	obj_properties[PROP_BUDGETED]	   = g_param_spec_boolean("budgeted", _("Budgeted"),
 		 _("Whether or not the time entry counts towards the project budget."), FALSE,
-		 G_PARAM_CONSTRUCT | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+		 G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
 	obj_properties[PROP_BILLABLE_RATE] = g_param_spec_double("billable_rate", _("Billable Rate"),
 		_("The billable rate for the time entry."), 0, DBL_MAX, 0,
-		G_PARAM_CONSTRUCT | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+		G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
 	obj_properties[PROP_COST_RATE]
 		= g_param_spec_double("cost_rate", _("Cost Rate"), _("The cost rate for the time entry."),
-			0, DBL_MAX, 0, G_PARAM_CONSTRUCT | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+			0, DBL_MAX, 0, G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
 	obj_properties[PROP_CREATED_AT] = g_param_spec_boxed("created_at", _("Created At"),
 		_("Date and time the time entry was created. Use the ISO 8601 Format."), G_TYPE_DATE_TIME,
-		G_PARAM_CONSTRUCT | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+		G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
 	obj_properties[PROP_UPDATED_AT] = g_param_spec_boxed("updated_at", _("Updated At"),
 		_("Date and time the time entry was last updated. Use the ISO 8601 Format."),
-		G_TYPE_DATE_TIME, G_PARAM_CONSTRUCT | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+		G_TYPE_DATE_TIME, G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
 
 	g_object_class_install_properties(obj_class, N_PROPS, obj_properties);
 }

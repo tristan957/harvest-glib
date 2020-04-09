@@ -20,8 +20,8 @@ struct _HarvestProjectTaskAssignment
 	HarvestTask *task;
 	gboolean is_active : 1;
 	gboolean billable : 1;
-	double hourly_rate;
-	double budget;
+	double *hourly_rate;
+	double *budget;
 	GDateTime *created_at;
 	GDateTime *updated_at;
 };
@@ -54,19 +54,30 @@ static gboolean
 harvest_project_task_assignment_json_deserialize_property(JsonSerializable *serializable,
 	const gchar *prop_name, GValue *val, GParamSpec *pspec, JsonNode *prop_node)
 {
-	if (g_strcmp0(prop_name, "created_at") == 0 || g_strcmp0(prop_name, "updated_at") == 0) {
+	if (pspec == obj_properties[PROP_CREATED_AT] || pspec == obj_properties[PROP_UPDATED_AT]) {
 		const GDateTime *dt = g_date_time_new_from_iso8601(json_node_get_string(prop_node), NULL);
 		g_value_set_boxed(val, dt);
 
 		return TRUE;
-	} else if (g_strcmp0(prop_name, "project") == 0) {
+	} else if (pspec == obj_properties[PROP_PROJECT]) {
 		GObject *obj = json_gobject_deserialize(HARVEST_TYPE_PROJECT, prop_node);
 		g_value_set_object(val, obj);
 
 		return TRUE;
-	} else if (g_strcmp0(prop_name, "task") == 0) {
+	} else if (pspec == obj_properties[PROP_TASK]) {
 		GObject *obj = json_gobject_deserialize(HARVEST_TYPE_TASK, prop_node);
 		g_value_set_object(val, obj);
+
+		return TRUE;
+	} else if (pspec == obj_properties[PROP_HOURLY_RATE] || pspec == obj_properties[PROP_BUDGET]) {
+		if (json_node_is_null(prop_node)) {
+			g_value_set_pointer(val, NULL);
+		} else {
+			const double dbl_value = json_node_get_double(prop_node);
+			double *mem			   = g_malloc0(sizeof(double));
+			memcpy(mem, &dbl_value, sizeof(double));
+			g_value_set_pointer(val, mem);
+		}
 
 		return TRUE;
 	}
@@ -121,10 +132,10 @@ harvest_project_task_assignment_get_property(
 		g_value_set_boolean(val, self->billable);
 		break;
 	case PROP_HOURLY_RATE:
-		g_value_set_double(val, self->hourly_rate);
+		g_value_set_pointer(val, self->hourly_rate);
 		break;
 	case PROP_BUDGET:
-		g_value_set_double(val, self->budget);
+		g_value_set_pointer(val, self->budget);
 		break;
 	case PROP_CREATED_AT:
 		g_value_set_boxed(val, self->created_at);
@@ -164,10 +175,12 @@ harvest_project_task_assignment_set_property(
 		self->billable = g_value_get_boolean(val);
 		break;
 	case PROP_HOURLY_RATE:
-		self->hourly_rate = g_value_get_double(val);
+		g_free(self->hourly_rate);
+		self->hourly_rate = g_value_get_pointer(val);
 		break;
 	case PROP_BUDGET:
-		self->budget = g_value_get_double(val);
+		g_free(self->budget);
+		self->budget = g_value_get_pointer(val);
 		break;
 	case PROP_CREATED_AT:
 		if (self->created_at != NULL)
@@ -195,32 +208,31 @@ harvest_project_task_assignment_class_init(HarvestProjectTaskAssignmentClass *kl
 
 	obj_properties[PROP_ID]
 		= g_param_spec_int("id", _("ID"), _("Unique ID for the task assignment."), 0, INT_MAX, 0,
-			G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS);
+			G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
 	obj_properties[PROP_PROJECT]	 = g_param_spec_object("project", _("Project"),
 		_("An object containing the id, name, and code of the associated project."),
-		HARVEST_TYPE_PROJECT, G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS);
+		HARVEST_TYPE_PROJECT, G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
 	obj_properties[PROP_TASK]		 = g_param_spec_object("task", _("Task"),
 		   _("An object containing the id and name of the associated task."), HARVEST_TYPE_TASK,
-		   G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS);
+		   G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
 	obj_properties[PROP_IS_ACTIVE]	 = g_param_spec_boolean("is_active", _("Is Active"),
 		  _("Whether the task assignment is active or archived."), FALSE,
-		  G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS);
+		  G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
 	obj_properties[PROP_BILLABLE]	 = g_param_spec_boolean("billable", _("Billable"),
 		   _("Whether the task assignment is billable or not. For example: if set to true, all time "
 			 "tracked on this project for the associated task will be marked as billable."),
-		   FALSE, G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS);
-	obj_properties[PROP_HOURLY_RATE] = g_param_spec_double("hourly_rate", _("Hourly Rate"),
-		_("Rate used when the project’s bill_by is Tasks."), 0, DBL_MAX, 0,
-		G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS);
-	obj_properties[PROP_BUDGET]		 = g_param_spec_double("budget", _("Budget"),
-		 _("Budget used when the project’s budget_by is task or task_fees."), 0, DBL_MAX, 0,
-		 G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS);
+		   FALSE, G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
+	obj_properties[PROP_HOURLY_RATE] = g_param_spec_pointer("hourly_rate", _("Hourly Rate"),
+		_("Rate used when the project’s bill_by is Tasks."), G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
+	obj_properties[PROP_BUDGET]		 = g_param_spec_pointer("budget", _("Budget"),
+		 _("Budget used when the project’s budget_by is task or task_fees."),
+		 G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
 	obj_properties[PROP_CREATED_AT]	 = g_param_spec_boxed("created_at", _("Created At"),
 		 _("Date and time the task assignment was created."), G_TYPE_DATE_TIME,
-		 G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS);
+		 G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
 	obj_properties[PROP_UPDATED_AT]	 = g_param_spec_boxed("updated_at", _("Updated At"),
 		 _("Date and time the task assignment was last updated."), G_TYPE_DATE_TIME,
-		 G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS);
+		 G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
 
 	g_object_class_install_properties(obj_class, N_PROPS, obj_properties);
 }

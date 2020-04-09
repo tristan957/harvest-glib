@@ -1,0 +1,717 @@
+{
+  "project_assignments": [
+    {
+      "id": 239740265,
+      "is_project_manager": false,
+      "is_active": true,
+      "use_default_rates": false,
+      "budget": null,
+      "created_at": "2020-04-06T18:36:06Z",
+      "updated_at": "2020-04-06T18:36:06Z",
+      "hourly_rate": null,
+      "project": {
+        "id": 23617390,
+        "name": "MG Professional Development",
+        "code": "744"
+      },
+      "client": {
+        "id": 5351858,
+        "name": "Deloitte Consulting LLP",
+        "currency": "USD"
+      },
+      "task_assignments": [
+        {
+          "id": 254173270,
+          "billable": true,
+          "is_active": true,
+          "created_at": "2020-01-13T01:28:31Z",
+          "updated_at": "2020-02-12T01:48:47Z",
+          "hourly_rate": null,
+          "budget": null,
+          "task": {
+            "id": 6138019,
+            "name": "Billable Work"
+          }
+        },
+        {
+          "id": 254173273,
+          "billable": false,
+          "is_active": true,
+          "created_at": "2020-01-13T01:28:31Z",
+          "updated_at": "2020-01-13T01:28:31Z",
+          "hourly_rate": null,
+          "budget": null,
+          "task": {
+            "id": 845022,
+            "name": "Unbillable Work (admin & finance)"
+          }
+        },
+        {
+          "id": 254173271,
+          "billable": false,
+          "is_active": true,
+          "created_at": "2020-01-13T01:28:31Z",
+          "updated_at": "2020-01-13T01:28:31Z",
+          "hourly_rate": null,
+          "budget": null,
+          "task": {
+            "id": 885405,
+            "name": "sales / business development"
+          }
+        },
+        {
+          "id": 254173272,
+          "billable": false,
+          "is_active": true,
+          "created_at": "2020-01-13T01:28:31Z",
+          "updated_at": "2020-01-13T01:28:31Z",
+          "hourly_rate": null,
+          "budget": null,
+          "task": {
+            "id": 5843143,
+            "name": "travel"
+          }
+        }
+      ]
+    },
+    {
+      "id": 237475308,
+      "is_project_manager": false,
+      "is_active": true,
+      "use_default_rates": true,
+      "budget": null,
+      "created_at": "2020-03-30T16:01:30Z",
+      "updated_at": "2020-03-30T16:01:30Z",
+      "hourly_rate": null,
+      "project": {
+        "id": 18279800,
+        "name": "Miranda",
+        "code": ""
+      },
+      "client": {
+        "id": 7109593,
+        "name": "Expero - Ventures",
+        "currency": "USD"
+      },
+      "task_assignments": [
+        {
+          "id": 262313022,
+          "billable": false,
+          "is_active": true,
+          "created_at": "2020-03-19T15:38:55Z",
+          "updated_at": "2020-03-19T15:38:55Z",
+          "hourly_rate": null,
+          "budget": null,
+          "task": {
+            "id": 14112315,
+            "name": "TigerGraph Cloud"
+          }
+        },
+        {
+          "id": 197635431,
+          "billable": false,
+          "is_active": true,
+          "created_at": "2018-08-17T16:27:03Z",
+          "updated_at": "2018-08-17T16:27:03Z",
+          "hourly_rate": null,
+          "budget": null,
+          "task": {
+            "id": 845022,
+            "name": "Unbillable Work (admin & finance)"
+          }
+        }
+      ]
+    },
+    {
+      "id": 233953423,
+      "is_project_manager": false,
+      "is_active": true,
+      "use_default_rates": true,
+      "budget": null,
+      "created_at": "2020-02-27T15:03:39Z",
+      "updated_at": "2020-02-27T15:03:39Z",
+      "hourly_rate": null,
+      "project": {
+        "id": 23983400,
+        "name": "Data Warehouse & Migration",
+        "code": "741"
+      },
+      "client": {
+        "id": 8002253,
+        "name": "API Abroad",
+        "currency": "USD"
+      },
+      "task_assignments": [
+        {
+          "id": 260682323,
+          "billable": true,
+          "is_active": true,
+          "created_at": "2020-03-04T13:41:30Z",
+          "updated_at": "2020-03-10T19:39:33Z",
+          "hourly_rate": null,
+          "budget": 176,
+          "task": {
+            "id": 14006689,
+            "name": "Analytical Sandbox (RDS -> Redshift)"
+          }
+        },
+        {
+          "id": 258063722,
+          "billable": true,
+          "is_active": true,
+          "created_at": "2020-02-12T00:17:56Z",
+          "updated_at": "2020-02-12T00:17:56Z",
+          "hourly_rate": null,
+          "budget": null,
+          "task": {
+            "id": 6138019,
+            "name": "Billable Work"
+          }
+        },
+        {
+          "id": 260682320,
+          "billable": true,
+          "is_active": true,
+          "created_at": "2020-03-04T13:41:30Z",
+          "updated_at": "2020-03-10T19:39:33Z",
+          "hourly_rate": null,
+          "budget": 255.67,
+          "task": {
+            "id": 14006686,
+            "name": "FileMaker to RDS (PostgreS)"
+          }
+        },
+        {
+          "id": 260682324,
+          "billable": true,
+          "is_active": true,
+          "created_at": "2020-03-04T13:41:30Z",
+          "updated_at": "2020-03-10T19:39:33Z",
+          "hourly_rate": null,
+          "budget": 40,
+          "task": {
+            "id": 14006690,
+            "name": "Final Data Load"
+          }
+        },
+        {
+          "id": 261383038,
+          "billable": true,
+          "is_active": true,
+          "created_at": "2020-03-10T19:40:40Z",
+          "updated_at": "2020-03-10T19:40:40Z",
+          "hourly_rate": null,
+          "budget": 49,
+          "task": {
+            "id": 845023,
+            "name": "Project Management"
+          }
+        },
+        {
+          "id": 260682321,
+          "billable": true,
+          "is_active": true,
+          "created_at": "2020-03-04T13:41:30Z",
+          "updated_at": "2020-03-10T19:39:33Z",
+          "hourly_rate": null,
+          "budget": 80,
+          "task": {
+            "id": 14006687,
+            "name": "RDS(Legacy) CP to RDS New Instance - Staging"
+          }
+        },
+        {
+          "id": 260682322,
+          "billable": true,
+          "is_active": true,
+          "created_at": "2020-03-04T13:41:30Z",
+          "updated_at": "2020-03-10T19:39:33Z",
+          "hourly_rate": null,
+          "budget": 144,
+          "task": {
+            "id": 14006688,
+            "name": "Sales Force to RDS (PostgreS) - Staging"
+          }
+        },
+        {
+          "id": 258063725,
+          "billable": false,
+          "is_active": true,
+          "created_at": "2020-02-12T00:17:56Z",
+          "updated_at": "2020-02-12T00:17:56Z",
+          "hourly_rate": null,
+          "budget": null,
+          "task": {
+            "id": 845022,
+            "name": "Unbillable Work (admin & finance)"
+          }
+        },
+        {
+          "id": 258063723,
+          "billable": false,
+          "is_active": true,
+          "created_at": "2020-02-12T00:17:56Z",
+          "updated_at": "2020-02-12T00:17:56Z",
+          "hourly_rate": null,
+          "budget": null,
+          "task": {
+            "id": 885405,
+            "name": "sales / business development"
+          }
+        },
+        {
+          "id": 258063724,
+          "billable": false,
+          "is_active": true,
+          "created_at": "2020-02-12T00:17:56Z",
+          "updated_at": "2020-02-12T00:17:56Z",
+          "hourly_rate": null,
+          "budget": null,
+          "task": {
+            "id": 5843143,
+            "name": "travel"
+          }
+        }
+      ]
+    },
+    {
+      "id": 233003314,
+      "is_project_manager": false,
+      "is_active": true,
+      "use_default_rates": true,
+      "budget": null,
+      "created_at": "2020-02-19T18:23:06Z",
+      "updated_at": "2020-02-19T18:23:06Z",
+      "hourly_rate": null,
+      "project": {
+        "id": 21876656,
+        "name": "TigerGraph - Partnership",
+        "code": ""
+      },
+      "client": {
+        "id": 6031612,
+        "name": "Expero - Sales & Marketing",
+        "currency": "USD"
+      },
+      "task_assignments": [
+        {
+          "id": 235747320,
+          "billable": false,
+          "is_active": true,
+          "created_at": "2019-07-25T14:38:28Z",
+          "updated_at": "2019-07-25T14:38:28Z",
+          "hourly_rate": null,
+          "budget": null,
+          "task": {
+            "id": 6138019,
+            "name": "Billable Work"
+          }
+        },
+        {
+          "id": 260917680,
+          "billable": false,
+          "is_active": true,
+          "created_at": "2020-03-05T20:48:46Z",
+          "updated_at": "2020-03-05T20:48:46Z",
+          "hourly_rate": null,
+          "budget": null,
+          "task": {
+            "id": 14021629,
+            "name": "BofA Performance Test"
+          }
+        },
+        {
+          "id": 235747323,
+          "billable": false,
+          "is_active": true,
+          "created_at": "2019-07-25T14:38:28Z",
+          "updated_at": "2019-07-25T14:38:28Z",
+          "hourly_rate": null,
+          "budget": null,
+          "task": {
+            "id": 845022,
+            "name": "Unbillable Work (admin & finance)"
+          }
+        },
+        {
+          "id": 235747321,
+          "billable": false,
+          "is_active": true,
+          "created_at": "2019-07-25T14:38:28Z",
+          "updated_at": "2019-07-25T14:38:28Z",
+          "hourly_rate": null,
+          "budget": null,
+          "task": {
+            "id": 885405,
+            "name": "sales / business development"
+          }
+        },
+        {
+          "id": 235747322,
+          "billable": false,
+          "is_active": true,
+          "created_at": "2019-07-25T14:38:28Z",
+          "updated_at": "2019-07-25T14:38:28Z",
+          "hourly_rate": null,
+          "budget": null,
+          "task": {
+            "id": 5843143,
+            "name": "travel"
+          }
+        }
+      ]
+    },
+    {
+      "id": 230458185,
+      "is_project_manager": false,
+      "is_active": true,
+      "use_default_rates": true,
+      "budget": null,
+      "created_at": "2020-01-30T20:00:13Z",
+      "updated_at": "2020-01-30T20:00:13Z",
+      "hourly_rate": null,
+      "project": {
+        "id": 22875395,
+        "name": "Summit 2020",
+        "code": ""
+      },
+      "client": {
+        "id": 543576,
+        "name": "Expero",
+        "currency": "USD"
+      },
+      "task_assignments": [
+        {
+          "id": 246544890,
+          "billable": false,
+          "is_active": true,
+          "created_at": "2019-10-31T14:55:25Z",
+          "updated_at": "2019-10-31T14:55:25Z",
+          "hourly_rate": null,
+          "budget": null,
+          "task": {
+            "id": 6138019,
+            "name": "Billable Work"
+          }
+        },
+        {
+          "id": 246544893,
+          "billable": false,
+          "is_active": true,
+          "created_at": "2019-10-31T14:55:25Z",
+          "updated_at": "2019-10-31T14:55:25Z",
+          "hourly_rate": null,
+          "budget": null,
+          "task": {
+            "id": 845022,
+            "name": "Unbillable Work (admin & finance)"
+          }
+        },
+        {
+          "id": 246544891,
+          "billable": false,
+          "is_active": true,
+          "created_at": "2019-10-31T14:55:25Z",
+          "updated_at": "2019-10-31T14:55:25Z",
+          "hourly_rate": null,
+          "budget": null,
+          "task": {
+            "id": 885405,
+            "name": "sales / business development"
+          }
+        },
+        {
+          "id": 246544892,
+          "billable": false,
+          "is_active": true,
+          "created_at": "2019-10-31T14:55:25Z",
+          "updated_at": "2019-10-31T14:55:25Z",
+          "hourly_rate": null,
+          "budget": null,
+          "task": {
+            "id": 5843143,
+            "name": "travel"
+          }
+        }
+      ]
+    },
+    {
+      "id": 206765469,
+      "is_project_manager": false,
+      "is_active": true,
+      "use_default_rates": true,
+      "budget": null,
+      "created_at": "2019-07-12T13:29:42Z",
+      "updated_at": "2019-07-12T13:29:42Z",
+      "hourly_rate": null,
+      "project": {
+        "id": 21756059,
+        "name": "Partner Technology Training/Certification",
+        "code": ""
+      },
+      "client": {
+        "id": 7228547,
+        "name": "Expero - G&A",
+        "currency": "USD"
+      },
+      "task_assignments": [
+        {
+          "id": 234448938,
+          "billable": false,
+          "is_active": true,
+          "created_at": "2019-07-12T13:29:42Z",
+          "updated_at": "2019-07-12T13:29:42Z",
+          "hourly_rate": null,
+          "budget": null,
+          "task": {
+            "id": 845022,
+            "name": "Unbillable Work (admin & finance)"
+          }
+        },
+        {
+          "id": 234448936,
+          "billable": false,
+          "is_active": true,
+          "created_at": "2019-07-12T13:29:42Z",
+          "updated_at": "2019-07-12T13:29:42Z",
+          "hourly_rate": null,
+          "budget": null,
+          "task": {
+            "id": 885405,
+            "name": "sales / business development"
+          }
+        },
+        {
+          "id": 234448937,
+          "billable": false,
+          "is_active": true,
+          "created_at": "2019-07-12T13:29:42Z",
+          "updated_at": "2019-07-12T13:29:42Z",
+          "hourly_rate": null,
+          "budget": null,
+          "task": {
+            "id": 5843143,
+            "name": "travel"
+          }
+        }
+      ]
+    },
+    {
+      "id": 193724588,
+      "is_project_manager": false,
+      "is_active": true,
+      "use_default_rates": true,
+      "budget": null,
+      "created_at": "2019-03-25T14:16:05Z",
+      "updated_at": "2019-03-25T14:16:05Z",
+      "hourly_rate": null,
+      "project": {
+        "id": 19908304,
+        "name": "Delivery",
+        "code": ""
+      },
+      "client": {
+        "id": 543576,
+        "name": "Expero",
+        "currency": "USD"
+      },
+      "task_assignments": [
+        {
+          "id": 220711949,
+          "billable": false,
+          "is_active": true,
+          "created_at": "2019-03-13T19:38:29Z",
+          "updated_at": "2019-03-13T19:38:29Z",
+          "hourly_rate": null,
+          "budget": null,
+          "task": {
+            "id": 11717111,
+            "name": "Delivery-General"
+          }
+        },
+        {
+          "id": 228106272,
+          "billable": false,
+          "is_active": true,
+          "created_at": "2019-05-17T13:55:24Z",
+          "updated_at": "2019-05-17T13:55:24Z",
+          "hourly_rate": null,
+          "budget": null,
+          "task": {
+            "id": 12260117,
+            "name": "Forecast Planning"
+          }
+        },
+        {
+          "id": 220711950,
+          "billable": false,
+          "is_active": true,
+          "created_at": "2019-03-13T19:38:29Z",
+          "updated_at": "2019-03-13T19:38:29Z",
+          "hourly_rate": null,
+          "budget": null,
+          "task": {
+            "id": 11717112,
+            "name": "Resource Planning"
+          }
+        }
+      ]
+    },
+    {
+      "id": 172056511,
+      "is_project_manager": false,
+      "is_active": true,
+      "use_default_rates": false,
+      "budget": null,
+      "created_at": "2018-09-24T02:58:06Z",
+      "updated_at": "2018-09-24T02:58:06Z",
+      "hourly_rate": null,
+      "project": {
+        "id": 18628261,
+        "name": "Group Development (All Hands, SIGs, Summits)",
+        "code": ""
+      },
+      "client": {
+        "id": 543576,
+        "name": "Expero",
+        "currency": "USD"
+      },
+      "task_assignments": [
+        {
+          "id": 201223428,
+          "billable": false,
+          "is_active": true,
+          "created_at": "2018-09-24T02:58:06Z",
+          "updated_at": "2018-09-24T02:58:06Z",
+          "hourly_rate": null,
+          "budget": null,
+          "task": {
+            "id": 845022,
+            "name": "Unbillable Work (admin & finance)"
+          }
+        },
+        {
+          "id": 201223427,
+          "billable": false,
+          "is_active": true,
+          "created_at": "2018-09-24T02:58:06Z",
+          "updated_at": "2018-09-24T02:58:06Z",
+          "hourly_rate": null,
+          "budget": null,
+          "task": {
+            "id": 5843143,
+            "name": "travel"
+          }
+        }
+      ]
+    },
+    {
+      "id": 170166371,
+      "is_project_manager": false,
+      "is_active": true,
+      "use_default_rates": false,
+      "budget": null,
+      "created_at": "2018-09-04T17:47:25Z",
+      "updated_at": "2018-09-04T17:47:25Z",
+      "hourly_rate": null,
+      "project": {
+        "id": 18450319,
+        "name": "Out of Office",
+        "code": ""
+      },
+      "client": {
+        "id": 543576,
+        "name": "Expero",
+        "currency": "USD"
+      },
+      "task_assignments": [
+        {
+          "id": 199449616,
+          "billable": false,
+          "is_active": true,
+          "created_at": "2018-09-04T17:47:25Z",
+          "updated_at": "2018-09-04T17:47:25Z",
+          "hourly_rate": null,
+          "budget": null,
+          "task": {
+            "id": 8293100,
+            "name": "time off"
+          }
+        }
+      ]
+    },
+    {
+      "id": 133615897,
+      "is_project_manager": false,
+      "is_active": true,
+      "use_default_rates": false,
+      "budget": null,
+      "created_at": "2017-09-26T18:36:54Z",
+      "updated_at": "2018-08-28T15:33:53Z",
+      "hourly_rate": null,
+      "project": {
+        "id": 1214988,
+        "name": "Internal",
+        "code": ""
+      },
+      "client": {
+        "id": 543576,
+        "name": "Expero",
+        "currency": "USD"
+      },
+      "task_assignments": [
+        {
+          "id": 236551400,
+          "billable": false,
+          "is_active": true,
+          "created_at": "2019-08-01T14:57:07Z",
+          "updated_at": "2019-08-01T14:57:07Z",
+          "hourly_rate": null,
+          "budget": null,
+          "task": {
+            "id": 10538569,
+            "name": "Invoice Management"
+          }
+        },
+        {
+          "id": 12067658,
+          "billable": false,
+          "is_active": true,
+          "created_at": "2011-04-18T02:56:15Z",
+          "updated_at": "2011-04-18T02:56:15Z",
+          "hourly_rate": null,
+          "budget": null,
+          "task": {
+            "id": 845022,
+            "name": "Unbillable Work (admin & finance)"
+          }
+        },
+        {
+          "id": 183276503,
+          "billable": false,
+          "is_active": true,
+          "created_at": "2018-04-02T17:38:21Z",
+          "updated_at": "2018-04-02T17:38:21Z",
+          "hourly_rate": null,
+          "budget": null,
+          "task": {
+            "id": 5843143,
+            "name": "travel"
+          }
+        }
+      ]
+    }
+  ],
+  "per_page": 100,
+  "total_pages": 1,
+  "total_entries": 10,
+  "next_page": null,
+  "previous_page": null,
+  "page": 1,
+  "links": {
+    "first": "https://api.harvestapp.com/v2/users/1861689/project_assignments?page=1&per_page=100",
+    "next": null,
+    "previous": null,
+    "last": "https://api.harvestapp.com/v2/users/1861689/project_assignments?page=1&per_page=100"
+  }
+}

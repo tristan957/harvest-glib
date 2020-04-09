@@ -120,18 +120,16 @@ harvest_api_client_class_init(HarvestApiClientClass *klass)
 	obj_class->get_property = harvest_api_client_get_property;
 	obj_class->set_property = harvest_api_client_set_property;
 
-	obj_properties[PROP_SESSION] = g_param_spec_object("session", _("Session"),
-		_("SoupSession object to use to make requests."), SOUP_TYPE_SESSION,
-		G_PARAM_CONSTRUCT | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
-	obj_properties[PROP_SERVER]
-		= g_param_spec_string("server", _("Server"), _("Base URL for the server."), NULL,
-			G_PARAM_CONSTRUCT_ONLY | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+	obj_properties[PROP_SESSION]	  = g_param_spec_object("session", _("Session"),
+		 _("SoupSession object to use to make requests."), SOUP_TYPE_SESSION,
+		 G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
+	obj_properties[PROP_SERVER]		  = g_param_spec_string("server", _("Server"),
+		  _("Base URL for the server."), NULL, G_PARAM_CONSTRUCT_ONLY | G_PARAM_READWRITE);
 	obj_properties[PROP_ACCESS_TOKEN] = g_param_spec_string("access-token", _("Access Token"),
 		_("Developer access token for the Harvest API."), NULL,
-		G_PARAM_CONSTRUCT | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
-	obj_properties[PROP_ACCOUNT_ID]
-		= g_param_spec_string("account-id", _("Account ID"), _("Harvest account ID to use."), NULL,
-			G_PARAM_CONSTRUCT | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+		G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
+	obj_properties[PROP_ACCOUNT_ID]	  = g_param_spec_string("account-id", _("Account ID"),
+		  _("Harvest account ID to use."), NULL, G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
 
 	g_object_class_install_properties(obj_class, N_PROPS, obj_properties);
 }

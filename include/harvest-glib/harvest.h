@@ -18,7 +18,7 @@
 #include "harvest-glib/http/request/harvest-paged-request.h"
 #include "harvest-glib/http/request/harvest-request.h"
 #include "harvest-glib/http/response/harvest-links.h"
-#include "harvest-glib/http/response/harvest-paged.h"
+#include "harvest-glib/http/response/harvest-paged-response.h"
 #include "harvest-glib/http/response/harvest-response-metadata.h"
 #include "harvest-glib/http/response/harvest-response.h"
 #include "harvest-glib/invoice/harvest-invoice-enum-types.h"
@@ -33,6 +33,8 @@
 #include "harvest-glib/time-entry/requests/harvest-late-request.h"
 #include "harvest-glib/user/harvest-user-project-assignment.h"
 #include "harvest-glib/user/harvest-user.h"
+#include "harvest-glib/user/requests/harvest-user-list-active-project-assignments-request.h"
 #include "harvest-glib/user/requests/harvest-users-me-request.h"
+#include "harvest-glib/user/responses/harvest-user-list-active-project-assignments-response.h"
 
 #undef __HARVEST_HEADER_INTERNAL__

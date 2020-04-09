@@ -52,11 +52,13 @@ harvest_paged_request_set_property(
 
 	switch (prop_id) {
 	case PROP_PAGE:
-		g_variant_unref(priv->page);
+		if (priv->page)
+			g_variant_unref(priv->page);
 		priv->page = g_value_get_variant(val);
 		break;
 	case PROP_PER_PAGE:
-		g_variant_unref(priv->per_page);
+		if (priv->page)
+			g_variant_unref(priv->per_page);
 		priv->per_page = g_value_get_variant(val);
 		break;
 	default:
@@ -70,8 +72,10 @@ harvest_paged_request_finalize(GObject *obj)
 	HarvestPagedRequest *self		 = HARVEST_PAGED_REQUEST(obj);
 	HarvestPagedRequestPrivate *priv = harvest_paged_request_get_instance_private(self);
 
-	g_variant_unref(priv->page);
-	g_variant_unref(priv->per_page);
+	if (priv->page)
+		g_variant_unref(priv->page);
+	if (priv->per_page)
+		g_variant_unref(priv->per_page);
 
 	G_OBJECT_CLASS(harvest_paged_request_parent_class)->finalize(obj);
 }
@@ -101,12 +105,12 @@ harvest_paged_request_class_init(HarvestPagedRequestClass *klass)
 	obj_class->set_property			  = harvest_paged_request_set_property;
 	req_class->serialize_query_params = harvest_paged_request_serialize_query_params;
 
-	obj_properties[PROP_PAGE]	  = g_param_spec_variant("page", _("Page"),
-		_("Page number of the results to retrieve."), G_VARIANT_TYPE_UINT32, NULL,
-		G_PARAM_CONSTRUCT | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+	obj_properties[PROP_PAGE]
+		= g_param_spec_variant("page", _("Page"), _("Page number of the results to retrieve."),
+			G_VARIANT_TYPE_UINT32, NULL, G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
 	obj_properties[PROP_PER_PAGE] = g_param_spec_variant("per-page", _("Per Page"),
 		_("Number of results to return per page."), G_VARIANT_TYPE_UINT32, NULL,
-		G_PARAM_CONSTRUCT | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+		G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
 
 	g_object_class_install_properties(obj_class, N_PROPS, obj_properties);
 }

@@ -14,7 +14,7 @@ request_public_headers = [
 
 response_public_headers = [
 	'response/harvest-links.h',
-	'response/harvest-paged.h',
+	'response/harvest-paged-response.h',
 	'response/harvest-response-metadata.h',
 	'response/harvest-response.h',
 ]

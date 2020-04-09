@@ -44,7 +44,7 @@ static gboolean
 harvest_invoice_item_category_deserialize_property(JsonSerializable *serializable,
 	const gchar *prop_name, GValue *val, GParamSpec *pspec, JsonNode *prop_node)
 {
-	if (g_strcmp0(prop_name, "created_at") == 0 || g_strcmp0(prop_name, "updated_at") == 0) {
+	if (pspec == obj_properties[PROP_CREATED_AT] || pspec == obj_properties[PROP_UPDATED_AT]) {
 		const GDateTime *dt = g_date_time_new_from_iso8601(json_node_get_string(prop_node), NULL);
 		g_value_set_boxed(val, dt);
 
@@ -151,25 +151,25 @@ harvest_invoice_item_category_class_init(HarvestInvoiceItemCategoryClass *klass)
 
 	obj_properties[PROP_ID]
 		= g_param_spec_int("id", _("ID"), ("Unique ID for the invoice item category."), 0, INT_MAX,
-			0, G_PARAM_CONSTRUCT | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+			0, G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
 	obj_properties[PROP_NAME]
 		= g_param_spec_string("name", _("name"), ("The name of the invoice item category."), NULL,
-			G_PARAM_CONSTRUCT | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+			G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
 	obj_properties[PROP_USE_AS_SERVICE]
 		= g_param_spec_boolean("use_as_service", _("Use as Service"),
 			("Whether this invoice item category is used for billable hours when generating an "
 			 "invoice."),
-			FALSE, G_PARAM_CONSTRUCT | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+			FALSE, G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
 	obj_properties[PROP_USE_AS_EXPENSE]
 		= g_param_spec_boolean("use_as_expense", _("Use as Expense"),
 			("Whether this invoice item category is used for expenses when generating an invoice."),
-			FALSE, G_PARAM_CONSTRUCT | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+			FALSE, G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
 	obj_properties[PROP_CREATED_AT] = g_param_spec_boxed("created_at", _("Created At"),
 		_("Date and time the invoice item category was created."), G_TYPE_DATE_TIME,
-		G_PARAM_CONSTRUCT | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+		G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
 	obj_properties[PROP_UPDATED_AT] = g_param_spec_boxed("updated_at", _("Updated At"),
 		_("Date and time the invoice item category was last updated."), G_TYPE_DATE_TIME,
-		G_PARAM_CONSTRUCT | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+		G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
 
 	g_object_class_install_properties(obj_class, N_PROPS, obj_properties);
 }

@@ -56,17 +56,17 @@ static gboolean
 harvest_project_user_assignment_deserialize_property(JsonSerializable *serializable,
 	const gchar *prop_name, GValue *val, GParamSpec *pspec, JsonNode *prop_node)
 {
-	if (g_strcmp0(prop_name, "created_at") == 0 || g_strcmp0(prop_name, "updated_at") == 0) {
+	if (pspec == obj_properties[PROP_CREATED_AT] || pspec == obj_properties[PROP_UPDATED_AT]) {
 		const GDateTime *dt = g_date_time_new_from_iso8601(json_node_get_string(prop_node), NULL);
 		g_value_set_boxed(val, dt);
 
 		return TRUE;
-	} else if (g_strcmp0(prop_name, "user") == 0) {
+	} else if (pspec == obj_properties[PROP_USER]) {
 		GObject *obj = json_gobject_deserialize(HARVEST_TYPE_USER, prop_node);
 		g_value_set_object(val, obj);
 
 		return TRUE;
-	} else if (g_strcmp0(prop_name, "project") == 0) {
+	} else if (pspec == obj_properties[PROP_PROJECT]) {
 		GObject *obj = json_gobject_deserialize(HARVEST_TYPE_PROJECT, prop_node);
 		g_value_set_object(val, obj);
 
@@ -203,38 +203,38 @@ harvest_project_user_assignment_class_init(HarvestProjectUserAssignmentClass *kl
 
 	obj_properties[PROP_ID]
 		= g_param_spec_int("id", _("ID"), _("Unique ID for the user assignment."), 0, INT_MAX, 0,
-			G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS);
+			G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
 	obj_properties[PROP_PROJECT]   = g_param_spec_object("project", _("Project"),
 		  _("An object containing the id, name, and code of the associated project."),
-		  HARVEST_TYPE_PROJECT, G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS);
+		  HARVEST_TYPE_PROJECT, G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
 	obj_properties[PROP_USER]	   = g_param_spec_object("user", _("User"),
 		 _("An object containing the id and name of the associated user."), HARVEST_TYPE_USER,
-		 G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS);
+		 G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
 	obj_properties[PROP_IS_ACTIVE] = g_param_spec_boolean("is_active", _("Is Active"),
 		_("Whether the user assignment is active or archived."), FALSE,
-		G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS);
+		G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
 	obj_properties[PROP_IS_PROJECT_MANAGER]
 		= g_param_spec_boolean("is_project_manager", _("Is Project Manager"),
 			_("Determines if the user has project manager permissions for the project."), FALSE,
-			G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS);
+			G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
 	obj_properties[PROP_USE_DEFAULT_RATES] = g_param_spec_boolean("use_default_rates",
 		_("Use Default Rates"),
 		_("Determines which billable rate(s) will be used on the project for this user when "
 		  "bill_by is People. When true, the project will use the user’s default billable rates. "
 		  "When false, the project will use the custom rate defined on this user assignment."),
-		FALSE, G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS);
+		FALSE, G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
 	obj_properties[PROP_HOURLY_RATE]	   = g_param_spec_double("hourly_rate", _("Hourly Rate"),
 		  _("Custom rate used when the project’s bill_by is People and use_default_rates is false."),
-		  0, DBL_MAX, 0, G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS);
+		  0, DBL_MAX, 0, G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
 	obj_properties[PROP_BUDGET]			   = g_param_spec_double("budget", _("Budget"),
 		   _("Budget used when the project’s budget_by is person."), 0, DBL_MAX, 0,
-		   G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS);
+		   G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
 	obj_properties[PROP_CREATED_AT]		   = g_param_spec_boxed("created_at", _("Created At"),
 		   _("Date and time the user assignment was created."), G_TYPE_DATE_TIME,
-		   G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS);
+		   G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
 	obj_properties[PROP_UPDATED_AT]		   = g_param_spec_boxed("updated_at", _("Updated At"),
 		   _("Date and time the user assignment was last updated."), G_TYPE_DATE_TIME,
-		   G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS);
+		   G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
 
 	g_object_class_install_properties(obj_class, N_PROPS, obj_properties);
 }

@@ -103,16 +103,16 @@ harvest_links_class_init(HarvestLinksClass *klass)
 
 	obj_properties[PROP_FIRST]
 		= g_param_spec_string("first", _("First"), _("Link to the first page of results."), NULL,
-			G_PARAM_CONSTRUCT | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+			G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
 	obj_properties[PROP_NEXT]
 		= g_param_spec_string("next", _("Next"), _("Link to the next page of results."), NULL,
-			G_PARAM_CONSTRUCT | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+			G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
 	obj_properties[PROP_PREVIOUS]
 		= g_param_spec_string("previous", _("Previous"), _("Link to the previous page of results."),
-			NULL, G_PARAM_CONSTRUCT | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+			NULL, G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
 	obj_properties[PROP_LAST]
 		= g_param_spec_string("last", _("Last"), _("Link to the last page of results."), NULL,
-			G_PARAM_CONSTRUCT | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+			G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
 
 	g_object_class_install_properties(obj_class, N_PROPS, obj_properties);
 }

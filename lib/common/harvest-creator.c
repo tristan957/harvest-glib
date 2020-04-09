@@ -84,9 +84,9 @@ harvest_creator_class_init(HarvestCreatorClass *klass)
 	obj_class->set_property = harvest_creator_set_property;
 
 	obj_properties[PROP_ID]	  = g_param_spec_int("id", _("ID"), _("Unique ID for the creator."), 0,
-		  INT_MAX, 0, G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS);
+		  INT_MAX, 0, G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
 	obj_properties[PROP_NAME] = g_param_spec_string("name", _("Name"), _("Name of the creator."),
-		NULL, G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS);
+		NULL, G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
 
 	g_object_class_install_properties(obj_class, N_PROPS, obj_properties);
 }

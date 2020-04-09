@@ -82,18 +82,19 @@ static gboolean
 harvest_project_deserialize_property(JsonSerializable *serializable, const gchar *prop_name,
 	GValue *val, GParamSpec *pspec, JsonNode *prop_node)
 {
-	if (g_strcmp0(prop_name, "created_at") == 0 || g_strcmp0(prop_name, "updated_at") == 0) {
+	if (pspec == obj_properties[PROP_CREATED_AT] || pspec == obj_properties[PROP_UPDATED_AT]) {
 		const GDateTime *dt = g_date_time_new_from_iso8601(json_node_get_string(prop_node), NULL);
 		g_value_set_boxed(val, dt);
 
 		return TRUE;
-	} else if (g_strcmp0(prop_name, "client") == 0) {
+	} else if (pspec == obj_properties[PROP_CLIENT]) {
 		GObject *obj = json_gobject_deserialize(HARVEST_TYPE_CLIENT, prop_node);
 		g_value_set_object(val, obj);
 
 		return TRUE;
-	} else if (g_strcmp0(prop_name, "over_budget_notification_date") == 0
-			   || g_strcmp0(prop_name, "starts_on") == 0 || g_strcmp0(prop_name, "ends_on") == 0) {
+	} else if (pspec == obj_properties[PROP_OVER_BUDGET_NOTIFICATION_DATE]
+			   || pspec == obj_properties[PROP_STARTS_ON]
+			   || pspec == obj_properties[PROP_ENDS_ON]) {
 		const GDateTime *dt
 			= g_date_time_new_from_abbreviated_date(json_node_get_string(prop_node));
 		g_value_set_boxed(val, dt);
@@ -259,7 +260,7 @@ harvest_project_set_property(GObject *obj, guint prop_id, const GValue *val, GPa
 		self->hourly_rate = g_value_get_double(val);
 		break;
 	case PROP_BUDGET:
-		self->budget = g_value_get_boolean(val);
+		self->budget = g_value_get_double(val);
 		break;
 	case PROP_BUDGET_BY:
 		g_free(self->budget_by);
@@ -330,81 +331,77 @@ harvest_project_class_init(HarvestProjectClass *klass)
 	obj_class->set_property = harvest_project_set_property;
 
 	obj_properties[PROP_ID] = g_param_spec_int("id", _("ID"), _("Unique ID for the project."), 0,
-		INT_MAX, 0, G_PARAM_CONSTRUCT | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
-	obj_properties[PROP_CLIENT] = g_param_spec_object("client", _("Client"),
-		_("An object containing the project’s client id, name, and currency."), HARVEST_TYPE_CLIENT,
-		G_PARAM_CONSTRUCT | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
-	obj_properties[PROP_NAME]
-		= g_param_spec_string("name", _("Name"), _("Unique name for the project."), NULL,
-			G_PARAM_CONSTRUCT | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
-	obj_properties[PROP_CODE]
-		= g_param_spec_string("code", _("Code"), _("The code associated with the project."), NULL,
-			G_PARAM_CONSTRUCT | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+		INT_MAX, 0, G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
+	obj_properties[PROP_CLIENT]			   = g_param_spec_object("client", _("Client"),
+		   _("An object containing the project’s client id, name, and currency."), HARVEST_TYPE_CLIENT,
+		   G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
+	obj_properties[PROP_NAME]			   = g_param_spec_string("name", _("Name"),
+		 _("Unique name for the project."), NULL, G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
+	obj_properties[PROP_CODE]			   = g_param_spec_string("code", _("Code"),
+		 _("The code associated with the project."), NULL, G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
 	obj_properties[PROP_IS_ACTIVE]		   = g_param_spec_boolean("is_active", _("Is Active"),
 		_("Whether the project is active or archived."), FALSE,
-		G_PARAM_CONSTRUCT | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+		G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
 	obj_properties[PROP_IS_BILLABLE]	   = g_param_spec_boolean("is_billable", _("Is Billable"),
-		  _("Whether the project is billable or not."), FALSE,
-		  G_PARAM_CONSTRUCT | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+		  _("Whether the project is billable or not."), FALSE, G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
 	obj_properties[PROP_IS_FIXED_FEE]	   = g_param_spec_boolean("is_fixed_fee", _("Is Fixed Fee"),
 		 _("Whether the project is a fixed-fee project or not."), FALSE,
-		 G_PARAM_CONSTRUCT | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+		 G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
 	obj_properties[PROP_BILL_BY]		   = g_param_spec_string("bill_by", _("Bill By"),
 		  _("The method by which the project is invoiced."), NULL,
-		  G_PARAM_CONSTRUCT | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+		  G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
 	obj_properties[PROP_HOURLY_RATE]	   = g_param_spec_double("hourly_rate", _("Hourly Rate"),
 		  _("Rate for projects billed by Project Hourly Rate."), 0, DBL_MAX, 0,
-		  G_PARAM_CONSTRUCT | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+		  G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
 	obj_properties[PROP_BUDGET]			   = g_param_spec_double("budget", _("Budget"),
 		   _("The budget in hours for the project when budgeting by time."), 0, DBL_MAX, 0,
-		   G_PARAM_CONSTRUCT | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+		   G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
 	obj_properties[PROP_BUDGET_BY]		   = g_param_spec_string("budget_by", _("Budget By"),
 		_("The method by which the project is budgeted."), FALSE,
-		G_PARAM_CONSTRUCT | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+		G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
 	obj_properties[PROP_BUDGET_IS_MONTHLY] = g_param_spec_boolean("budget_is_monthly",
 		_("Budget is Monthly"), _("Option to have the budget reset every month."), FALSE,
-		G_PARAM_CONSTRUCT | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+		G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
 	obj_properties[PROP_NOTIFY_WHEN_OVER_BUDGET]
 		= g_param_spec_boolean("notify_when_over_budget", _("Notify When Over Budget"),
 			_("Whether project managers should be notified when the project goes over budget."),
-			FALSE, G_PARAM_CONSTRUCT | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+			FALSE, G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
 	obj_properties[PROP_OVER_BUDGET_NOTIFICATION_PERCENTAGE] = g_param_spec_double(
 		"over_budget_notification_percentage", _("Over Budget Notification Percentage"),
 		_("Percentage value used to trigger over budget email alerts."), 0, DBL_MAX, 0,
-		G_PARAM_CONSTRUCT | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+		G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
 	obj_properties[PROP_OVER_BUDGET_NOTIFICATION_DATE]
 		= g_param_spec_boxed("over_budget_notification_date", _("Over Budget Notification Date"),
 			_("Date of last over budget notification. If none have been sent, this will be null."),
-			G_TYPE_DATE_TIME, G_PARAM_CONSTRUCT | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+			G_TYPE_DATE_TIME, G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
 	obj_properties[PROP_SHOW_BUDGET_TO_ALL]
 		= g_param_spec_boolean("show_budget_to_all", _("Show Budget to All"),
 			_("Option to show project budget to all employees. Does not apply to Total Project Fee "
 			  "projects."),
-			FALSE, G_PARAM_CONSTRUCT | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+			FALSE, G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
 	obj_properties[PROP_COST_BUDGET] = g_param_spec_double("cost_budget", _("Cost Budget"),
 		_("The monetary budget for the project when budgeting by money."), 0, DBL_MAX, 0,
-		G_PARAM_CONSTRUCT | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+		G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
 	obj_properties[PROP_COST_BUDGET_INCLUDE_EXPENSES]
 		= g_param_spec_boolean("cost_budget_includes_expenses", _("Cost Budget Includes Expenses"),
 			_("Option for budget of Total Project Fees projects to include tracked expenses."),
-			FALSE, G_PARAM_CONSTRUCT | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+			FALSE, G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
 	obj_properties[PROP_FEE]   = g_param_spec_double("fee", _("Fee"),
 		  _("The amount you plan to invoice for the project. Only used by fixed-fee projects."), 0,
-		  DBL_MAX, 0, G_PARAM_CONSTRUCT | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
-	obj_properties[PROP_NOTES] = g_param_spec_string("notes", _("Notes"), _("Project notes."), NULL,
-		G_PARAM_CONSTRUCT | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+		  DBL_MAX, 0, G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
+	obj_properties[PROP_NOTES] = g_param_spec_string(
+		"notes", _("Notes"), _("Project notes."), NULL, G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
 	obj_properties[PROP_STARTS_ON]
 		= g_param_spec_boxed("starts_on", _("Starts On"), _("Date the project was started."),
-			G_TYPE_DATE_TIME, G_PARAM_CONSTRUCT | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
-	obj_properties[PROP_ENDS_ON]
-		= g_param_spec_boxed("ends_on", _("Ends On"), _("Date the project will end."),
-			G_TYPE_DATE_TIME, G_PARAM_CONSTRUCT | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+			G_TYPE_DATE_TIME, G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
+	obj_properties[PROP_ENDS_ON]	= g_param_spec_boxed("ends_on", _("Ends On"),
+		   _("Date the project will end."), G_TYPE_DATE_TIME, G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
 	obj_properties[PROP_CREATED_AT] = g_param_spec_boxed("created_at", _("Created At"),
 		_("Date and time the project was created."), G_TYPE_DATE_TIME,
-		G_PARAM_CONSTRUCT | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+		G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
 	obj_properties[PROP_UPDATED_AT] = g_param_spec_boxed("updated_at", _("Updated At"),
 		_("Date and time the project was last updated."), G_TYPE_DATE_TIME,
-		G_PARAM_CONSTRUCT | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+		G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
 
 	g_object_class_install_properties(obj_class, N_PROPS, obj_properties);
 }
