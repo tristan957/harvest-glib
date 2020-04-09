@@ -11,7 +11,7 @@ sources:
 tasks:
   - setup: |
       cd harvest-glib
-      CC=gcc meson -Dwerror=true -Dbuildtype=release -Dwarning_level=2 build
+      CC=gcc meson -Dwerror=true -Dbuildtype=release -Dwarning_level=2 -Ddocs=false build
   - build: |
       cd harvest-glib
       ninja -C build
